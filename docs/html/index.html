@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Connective Field mapping using fMRI &#8212; cfMaps  documentation</title>
+    <title>Optimization strategies in cortical connective field (CF) mapping &#8212; cfMaps  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
@@ -97,15 +97,32 @@
 
           <div class="body" role="main">
             
-  <section id="connective-field-mapping-using-fmri">
-<h1>Connective Field mapping using fMRI<a class="headerlink" href="#connective-field-mapping-using-fmri" title="Permalink to this heading">¶</a></h1>
-<p>Benchmarks for different modelling procedures in cortical connective field (CF) mapping.</p>
+  <section id="optimization-strategies-in-cortical-connective-field-cf-mapping">
+<h1>Optimization strategies in cortical connective field (CF) mapping<a class="headerlink" href="#optimization-strategies-in-cortical-connective-field-cf-mapping" title="Permalink to this heading">¶</a></h1>
+<p><em>Benchmarks for different modelling procedures in cortical connective field (CF) mapping.</em></p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This online resource is an evolving document. It may therefore contain errors and corrections. Content will be added over time. Check it regularly to get the latest version.</p>
 </div>
+<p>Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in <code class="docutils literal notranslate"><span class="pre">mrVista</span></code> (using Matlab’s <code class="docutils literal notranslate"><span class="pre">lscov</span></code>) <a class="footnote-reference brackets" href="#footcite-haak-2013" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-gravel-2014" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation part of the <em>connective field</em> branch of the <a class="reference external" href="https://github.com/VU-Cog-Sci/prfpy">prfpy</a> Python package <a class="footnote-reference brackets" href="#footcite-knapen-topo-2021" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Using Python scikit-learn optimization functions (implemented as part of the <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> package), the parameter space this version provides also converges to predefined grid parameters. Third, a more recent Python implementation by So-Hyeon et al. (2024) <a class="footnote-reference brackets" href="#footcite-yoo-proto-2024" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> that implements a parameter (CF size) refinement approach using the <a class="reference external" href="https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm">Broyden-Fletcher-Goldfarb-Shanno</a> optimization algorithm. Fourth, another Python implementation that capitalizes on <a class="reference external" href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a> using <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code> and CUDA (partly inspired in the recent Python package <a class="reference external" href="https://braincoder-devs.github.io/">braincoder</a>) <a class="footnote-reference brackets" href="#footcite-dehollander2024braincoder" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> to achieve highly efficient gradient descent. To coordinate this effort, we rely on widely used population receptive field mapping tools <a class="footnote-reference brackets" href="#footcite-dumoulin-2008" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-benson-2018" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> and high-field 7T-MRI data kindly made available by <a class="reference external" href="https://joliot.cea.fr/drf/joliot/en/Pages/research_entities/NeuroSpin.aspx">NeuroSpin</a>.</p>
+<p>Please have a look <a class="reference external" href="https://nicogravel.github.io/cfMaps/">here</a> for installation instructions, tutorials, and examples.</p>
+<section id="how-to-cite">
+<h2>How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this heading">¶</a></h2>
+<p>If you use this code please cite using the following information:</p>
+<p>Gravel, N., Renken, R., &amp; Cornelissen, F. W. (2025). <em>Optimization strategies in cortical connective field (CF) mapping</em>. Zenodo. DOI: <a class="reference external" href="https://doi.org/10.5281/zenodo.17373320">https://doi.org/10.5281/zenodo.17373320</a></p>
+<p>Alternatively, use this BibTeX entry:</p>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">Gravel_optCF_2025</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Gravel, Nicol{\&#39;a}s and Renken, Remco and Cornelissen, Frans W}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{Optimization strategies in cortical connective field (CF) mapping}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2025}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">publisher</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Zenodo}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">doi</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="s">{10.5281/zenodo.17373320}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">url</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="s">{https://doi.org/10.5281/zenodo.17373320}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <section id="content">
-<h2>Content<a class="headerlink" href="#content" title="Permalink to this heading">¶</a></h2>
+<h3>Content<a class="headerlink" href="#content" title="Permalink to this heading">¶</a></h3>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="vfm/index.html">1. Visual Field mapping</a><ul>
@@ -128,6 +145,47 @@
 </li>
 </ul>
 </div>
+</section>
+<section id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h3>
+<div class="docutils container" id="id8">
+<aside class="footnote brackets" id="footcite-haak-2013" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Koen V. Haak, Jonathan Winawer, Ben M. Harvey, Remco Renken, Serge O. Dumoulin, Brian A. Wandell, and Frans W. Cornelissen. Connective field modeling. <em>NeuroImage</em>, 66:376–384, 2013. <a class="reference external" href="https://doi.org/10.1016/j.neuroimage.2012.10.037">doi:10.1016/j.neuroimage.2012.10.037</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-gravel-2014" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Nicolás Gravel, Ben Harvey, Barbara Nordhjem, Koen V Haak, Serge O Dumoulin, Remco Renken, Branislava Ćurčić-Blake, and Frans W Cornelissen. Cortical connective field estimates from resting state fMRI activity. <em>Front. Neurosci.</em>, 8:339, 31 October 2014. <a class="reference external" href="https://doi.org/10.3389/fnins.2014.00339">doi:10.3389/fnins.2014.00339</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-knapen-topo-2021" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Tomas Knapen. Topographic connectivity reveals task-dependent retinotopic processing throughout the human brain. <em>Proceedings of the National Academy of Sciences</em>, 118(2):e2017032118, 2021. <a class="reference external" href="https://doi.org/10.1073/pnas.2017032118">doi:10.1073/pnas.2017032118</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-yoo-proto-2024" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>So-Hyeon Yoo, Anne-Sophie Kieslinger, and Michael A. Skeide. Population connective field modeling reveals proto-retinotopic visual cortex organization in the prenatal human brain. <em>bioRxiv</em>, 2024. <a class="reference external" href="https://doi.org/10.1101/2024.07.08.602507">doi:10.1101/2024.07.08.602507</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-dehollander2024braincoder" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Gilles de Hollander, Maike Renkert, Christian C. Ruff, and Tomas H. Knapen. Braincoder: a package for fitting encoding models to neural data and decoding stimulus features. 2024. URL: <a class="reference external" href="https://github.com/Gilles86/braincoder">https://github.com/Gilles86/braincoder</a>, <a class="reference external" href="https://doi.org/10.5281/zenodo.10778413">doi:10.5281/zenodo.10778413</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-dumoulin-2008" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">6</a><span class="fn-bracket">]</span></span>
+<p>Serge O. Dumoulin and Brian A. Wandell. Population receptive field estimates in human visual cortex. <em>NeuroImage</em>, 39(2):647–660, 2008. <a class="reference external" href="https://doi.org/https://doi.org/10.1016/j.neuroimage.2007.09.034">doi:https://doi.org/10.1016/j.neuroimage.2007.09.034</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-benson-2018" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">7</a><span class="fn-bracket">]</span></span>
+<p>Noah C. Benson, Keith W. Jamison, Michael J. Arcaro, An T. Vu, Matthew F. Glasser, Timothy S. Coalson, David C. Van Essen, Essa Yacoub, Kamil Ugurbil, Jonathan Winawer, and Kendrick Kay. The Human Connectome Project 7 Tesla retinotopy dataset: Description and population receptive field analysis. <em>Journal of Vision</em>, 18(13):23–23, 12 2018. <a class="reference external" href="https://doi.org/10.1167/18.13.23">doi:10.1167/18.13.23</a>.</p>
+</aside>
+</aside>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="handbook" role="note">
+<span class="label"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></span>
+<p>The tutorials presented here are inspired by <a class="reference external" href="https://goodresearch.dev">The Good Research Code Handbook</a>, by <a class="reference external" href="https://scholar.google.com/citations?user=gpQg9uQAAAAJ&amp;hl=en">Patrick Mineault</a>.</p>
+</aside>
+</aside>
+</section>
 </section>
 </section>
 
