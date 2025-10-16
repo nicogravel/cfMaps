@@ -1,0 +1,24 @@
+Connective Field mapping using fMRI
+###################################
+
+
+Benchmarks for different modelling procedures in cortical connective field (CF) mapping.
+  
+
+.. note::
+
+	This online resource is an evolving document. It may therefore contain errors and corrections. Content will be added over time. Check it regularly to get the latest version.
+
+
+**********
+Content
+**********
+.. toctree::
+      :maxdepth: 2
+      :numbered:          
+
+      Visual Field mapping <vfm/index>
+      Connectivity mapping <connmaps/index>
+      Codebook <modules>  
+
+

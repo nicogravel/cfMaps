@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cfmap.color_palettes &#8212; cfMaps  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Research Log</p>
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../vfm/index.html">1. Visual Field mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connmaps/index.html">2. Connectivity mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">3. Codebook</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for cfmap.color_palettes</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
+
+
+
+<div class="viewcode-block" id="get_color_palettes"><a class="viewcode-back" href="../../cfmap.html#cfmap.color_palettes.get_color_palettes">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_color_palettes</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns color palettes for eccentricity and polar angle mappings.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: Dictionary containing eccentricity and polar palettes in various formats</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Eccentricity palette RGB values (0-255)</span>
+    <span class="n">ecc_rgb_values</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>   <span class="c1"># Red</span>
+        <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">130</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Orange-red</span>
+        <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Orange-yellow</span>
+        <span class="p">[</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Yellow</span>
+        <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Yellow-green</span>
+        <span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>   <span class="c1"># Green</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">207</span><span class="p">],</span>  <span class="c1"># Turquoise</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">231</span><span class="p">,</span> <span class="mi">255</span><span class="p">],</span>  <span class="c1"># Cyan</span>
+        <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">255</span><span class="p">],</span> <span class="c1"># Light blue</span>
+        <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">255</span><span class="p">]</span>   <span class="c1"># Blue</span>
+    <span class="p">]</span>
+    
+    <span class="c1"># Polar palette RGB values (0-255)</span>
+    <span class="n">polar_rgb_values</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="mi">106</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">69</span><span class="p">],</span>   <span class="c1"># Color1</span>
+        <span class="p">[</span><span class="mi">203</span><span class="p">,</span> <span class="mi">219</span><span class="p">,</span> <span class="mi">42</span><span class="p">],</span>   <span class="c1"># Color2</span>
+        <span class="p">[</span><span class="mi">254</span><span class="p">,</span> <span class="mi">205</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>    <span class="c1"># Color3</span>
+        <span class="p">[</span><span class="mi">242</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">34</span><span class="p">],</span>   <span class="c1"># Color4</span>
+        <span class="p">[</span><span class="mi">237</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">36</span><span class="p">],</span>    <span class="c1"># Color5</span>
+        <span class="p">[</span><span class="mi">237</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">36</span><span class="p">],</span>    <span class="c1"># Color6</span>
+        <span class="p">[</span><span class="mi">242</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">34</span><span class="p">],</span>   <span class="c1"># Color7</span>
+        <span class="p">[</span><span class="mi">254</span><span class="p">,</span> <span class="mi">205</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>    <span class="c1"># Color8</span>
+        <span class="p">[</span><span class="mi">203</span><span class="p">,</span> <span class="mi">219</span><span class="p">,</span> <span class="mi">42</span><span class="p">],</span>   <span class="c1"># Color9</span>
+        <span class="p">[</span><span class="mi">106</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">69</span><span class="p">],</span>   <span class="c1"># Color10</span>
+        <span class="p">[</span><span class="mi">106</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">69</span><span class="p">],</span>   <span class="c1"># Color11</span>
+        <span class="p">[</span><span class="mi">110</span><span class="p">,</span> <span class="mi">205</span><span class="p">,</span> <span class="mi">221</span><span class="p">],</span>  <span class="c1"># Color12</span>
+        <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">178</span><span class="p">,</span> <span class="mi">219</span><span class="p">],</span>   <span class="c1"># Color13</span>
+        <span class="p">[</span><span class="mi">62</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">179</span><span class="p">],</span>   <span class="c1"># Color14</span>
+        <span class="p">[</span><span class="mi">57</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">165</span><span class="p">],</span>    <span class="c1"># Color15</span>
+        <span class="p">[</span><span class="mi">57</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">165</span><span class="p">],</span>    <span class="c1"># Color16</span>
+        <span class="p">[</span><span class="mi">62</span><span class="p">,</span> <span class="mi">105</span><span class="p">,</span> <span class="mi">179</span><span class="p">],</span>   <span class="c1"># Color17</span>
+        <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">178</span><span class="p">,</span> <span class="mi">219</span><span class="p">],</span>   <span class="c1"># Color18</span>
+        <span class="p">[</span><span class="mi">110</span><span class="p">,</span> <span class="mi">205</span><span class="p">,</span> <span class="mi">221</span><span class="p">],</span>  <span class="c1"># Color19</span>
+        <span class="p">[</span><span class="mi">106</span><span class="p">,</span> <span class="mi">189</span><span class="p">,</span> <span class="mi">69</span><span class="p">]</span>    <span class="c1"># Color20</span>
+    <span class="p">]</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_palette_formats</span><span class="p">(</span><span class="n">rgb_values</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper function to create different palette formats.&quot;&quot;&quot;</span>
+        <span class="c1"># Normalize to 0-1 range for matplotlib</span>
+        <span class="n">norm_values</span> <span class="o">=</span> <span class="p">[[</span><span class="n">r</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="n">g</span><span class="o">/</span><span class="mi">255</span><span class="p">,</span> <span class="n">b</span><span class="o">/</span><span class="mi">255</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">rgb_values</span><span class="p">]</span>
+        
+        <span class="c1"># Create hex values for other libraries</span>
+        <span class="n">hex_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">mcolors</span><span class="o">.</span><span class="n">rgb2hex</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span> <span class="k">for</span> <span class="n">rgb</span> <span class="ow">in</span> <span class="n">norm_values</span><span class="p">]</span>
+        
+        <span class="c1"># Create named colors with format for easy access</span>
+        <span class="n">named_colors</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;color</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">hex_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hex_values</span><span class="p">))}</span>
+        
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;rgb_0_255&quot;</span><span class="p">:</span> <span class="n">rgb_values</span><span class="p">,</span>         <span class="c1"># Original RGB (0-255)</span>
+            <span class="s2">&quot;rgb_0_1&quot;</span><span class="p">:</span> <span class="n">norm_values</span><span class="p">,</span>          <span class="c1"># Normalized RGB (0-1)</span>
+            <span class="s2">&quot;hex&quot;</span><span class="p">:</span> <span class="n">hex_values</span><span class="p">,</span>               <span class="c1"># Hex color codes</span>
+            <span class="s2">&quot;named&quot;</span><span class="p">:</span> <span class="n">named_colors</span><span class="p">,</span>           <span class="c1"># Named colors</span>
+            <span class="s2">&quot;matplotlib_cmap&quot;</span><span class="p">:</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">&quot;custom_cmap&quot;</span><span class="p">,</span> <span class="n">norm_values</span><span class="p">)</span>  <span class="c1"># Matplotlib colormap</span>
+        <span class="p">}</span>
+    
+    <span class="c1"># Create palettes</span>
+    <span class="n">eccentricity_palette</span> <span class="o">=</span> <span class="n">create_palette_formats</span><span class="p">(</span><span class="n">ecc_rgb_values</span><span class="p">)</span>
+    <span class="n">polar_palette</span> <span class="o">=</span> <span class="n">create_palette_formats</span><span class="p">(</span><span class="n">polar_rgb_values</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;eccentricity&quot;</span><span class="p">:</span> <span class="n">eccentricity_palette</span><span class="p">,</span>
+        <span class="s2">&quot;polar&quot;</span><span class="p">:</span> <span class="n">polar_palette</span>
+    <span class="p">}</span></div>
+</pre></div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

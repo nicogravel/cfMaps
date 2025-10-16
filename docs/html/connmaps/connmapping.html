@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>2.1. Connective Field (CF) modelling &#8212; cfMaps  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.2. Benchmarks for different modelling procedures" href="../notebooks/CF_modelling.html" />
+    <link rel="prev" title="2. Connective Field Modelling" href="index.html" />
+    <link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Research Log</p>
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vfm/index.html">1. Visual Field mapping</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">2. Connectivity mapping</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. <strong>Connective Field (CF) modelling</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/CF_modelling.html">2.2. Benchmarks for different modelling procedures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">3. Codebook</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html"><span class="section-number">2. </span>Connective Field Modelling</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter"><span class="section-number">2. </span>Connective Field Modelling</a></li>
+      <li>Next: <a href="../notebooks/CF_modelling.html" title="next chapter"><span class="section-number">2.2. </span>Benchmarks for different modelling procedures</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document"><span class="section-number">2. </span>Connective Field Modelling</a>
+        </li>
+        <li>
+          <a href="../notebooks/CF_modelling.html" title="Next document"><span class="section-number">2.2. </span>Benchmarks for different modelling procedures</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="connective-field-cf-modelling">
+<h1><span class="section-number">2.1. </span><strong>Connective Field (CF) modelling</strong><a class="headerlink" href="#connective-field-cf-modelling" title="Permalink to this heading">¶</a></h1>
+<p>Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in <code class="docutils literal notranslate"><span class="pre">mrVista</span></code> (using Matlab built in lscov) by Haak et al. (2013), which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation presented by Knapen et al. (2016). Using Python sci-kit learn optimization functions (implemented as part of the <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> package), the parameter space this version provides also converges to predefined grid parameters. Third, a more recent Python implementation by So-Hyeon et al. (2024) that implements a parameter refinement space using the Broyden-Fletcher-Goldfarb-Shanno optimization algorithm for gradient descent using sci-py functions. Fourth, another Python implementation that capitalizes on automatic differentiation using <code class="docutils literal notranslate"><span class="pre">Tensorflow</span></code> and CUDA (implemented as part of the <code class="docutils literal notranslate"><span class="pre">braincoder</span></code> package) to achieve highly efficient gradient descent.</p>
+<section id="questions">
+<h2><span class="section-number">2.1.1. </span><span style="color:lightblue">Questions? 🦉</span><a class="headerlink" href="#questions" title="Permalink to this heading">¶</a></h2>
+<script src="https://giscus.app/client.js"
+        data-repo="nicogravel/cfMaps"
+        data-repo-id="R_kgDOQDs4IA"
+        data-category="Benchmarks"
+        data-category-id="DIC_kwDOQDs4IM4CwuKQ"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light_protanopia"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document"><span class="section-number">2. </span>Connective Field Modelling</a>
+        </li>
+        <li>
+          <a href="../notebooks/CF_modelling.html" title="Next document"><span class="section-number">2.2. </span>Benchmarks for different modelling procedures</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      <a href="../_sources/connmaps/connmapping.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

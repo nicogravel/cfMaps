@@ -1,0 +1,2101 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>2.2. Benchmarks for different modelling procedures &#8212; cfMaps  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. cfmap" href="../modules.html" />
+    <link rel="prev" title="2.1. Connective Field (CF) modelling" href="../connmaps/connmapping.html" />
+    <link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Research Log</p>
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../vfm/index.html">1. Visual Field mapping</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../connmaps/index.html">2. Connectivity mapping</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../connmaps/connmapping.html">2.1. <strong>Connective Field (CF) modelling</strong></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Benchmarks for different modelling procedures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">3. Codebook</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../connmaps/index.html"><span class="section-number">2. </span>Connective Field Modelling</a><ul>
+      <li>Previous: <a href="../connmaps/connmapping.html" title="previous chapter"><span class="section-number">2.1. </span><strong>Connective Field (CF) modelling</strong></a></li>
+      <li>Next: <a href="../modules.html" title="next chapter"><span class="section-number">3. </span>cfmap</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="../connmaps/connmapping.html" title="Previous document"><span class="section-number">2.1. </span><strong>Connective Field (CF) modelling</strong></a>
+        </li>
+        <li>
+          <a href="../modules.html" title="Next document"><span class="section-number">3. </span>cfmap</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section id="Benchmarks-for-different-modelling-procedures">
+<h1><span class="section-number">2.2. </span>Benchmarks for different modelling procedures<a class="headerlink" href="#Benchmarks-for-different-modelling-procedures" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reinstall latest updates and restart kernel</span>
+<span class="o">!</span><span class="nb">cd</span><span class="w"> </span>/home/nicolas-gravel/Documents/GitHubProjects/cfMaps/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Obtaining file:///home/nicolas-gravel/Documents/GitHubProjects/cfMaps
+  Installing build dependencies ... done
+  Checking if build backend supports build_editable ... done
+  Getting requirements to build editable ... done
+  Preparing editable metadata (pyproject.toml) ... done
+Building wheels for collected packages: conmaps
+  Building editable for conmaps (pyproject.toml) ... done
+  Created wheel for conmaps: filename=conmaps-0.0.0-0.editable-py3-none-any.whl size=3772 sha256=c7b1c5e03fe9648e33ffea1dddd0013549147a34a88a86b331a314093f0a9992
+  Stored in directory: /tmp/pip-ephem-wheel-cache-kd3m7043/wheels/a0/70/a8/75fa0900702ea99de0075946e4ff3d3c683c37649355fe66c2
+Successfully built conmaps
+Installing collected packages: conmaps
+Successfully installed conmaps-0.0.0
+</pre></div></div>
+</div>
+<section id="Set-up-variables">
+<h2><span class="section-number">2.2.1. </span>Set up variables<a class="headerlink" href="#Set-up-variables" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for fMRI data manipulation and basic data handling</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nibabel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">neuropythy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ny</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ipyvolume</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ipv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Patch</span>
+
+<span class="c1"># For CF modeling</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prfpy.stimulus</span><span class="w"> </span><span class="kn">import</span> <span class="n">CFStimulus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prfpy.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">CFGaussianModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prfpy.fit</span><span class="w"> </span><span class="kn">import</span> <span class="n">CFFitter</span>
+
+<span class="c1"># For CF map plotting</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.inset_locator</span><span class="w"> </span><span class="kn">import</span> <span class="n">inset_axes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wedge</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
+
+<span class="c1"># Retmaps code</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cfmap.color_palettes</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_color_palettes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cfmap.pRF_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_prf_maps</span><span class="p">,</span> <span class="n">plot_prf_histograms</span><span class="p">,</span> <span class="n">plot_roi_retMap</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">cfmap.CF_mapping</span><span class="w"> </span><span class="kn">import</span> <span class="n">optimize_connfield_dfree</span><span class="p">,</span> <span class="n">optimize_connfield_gdescent</span><span class="p">,</span> <span class="n">optimize_connfield_joint</span><span class="p">,</span> <span class="n">plot_convergence_summary_table</span><span class="p">,</span> <span class="n">compare_cf_results</span>
+
+
+<span class="c1"># Map correlations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">pearsonr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pingouin</span><span class="w"> </span><span class="kn">import</span> <span class="n">circ_corrcl</span>
+
+<span class="c1"># Select subject and session</span>
+<span class="n">subject_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;02&#39;</span><span class="p">]</span>
+<span class="n">subject_id</span> <span class="o">=</span> <span class="n">subject_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">session_id</span> <span class="o">=</span> <span class="s1">&#39;ses-01&#39;</span>
+
+
+
+<span class="c1"># Select type of surface projection</span>
+<span class="n">projType</span> <span class="o">=</span> <span class="s1">&#39;surf-projected_projfrac&#39;</span>
+<span class="c1">#projType = &#39;surf-projected_projdist-avg&#39;</span>
+
+<span class="c1"># Define base paths</span>
+<span class="c1">#base_data_path = &#39;/media/user/External/XY/&#39;</span>
+<span class="c1">#pRF_images_path = &#39;/home/user/Documents/data/XY/pRF_images/&#39;</span>
+<span class="n">base_data_path</span> <span class="o">=</span> <span class="s1">&#39;/media/user/Crucial/XY/&#39;</span>
+<span class="n">pRF_images_path</span> <span class="o">=</span> <span class="s1">&#39;/media/user/Crucial/XY/pRF_images&#39;</span>
+
+<span class="c1"># Load color palettes</span>
+<span class="n">color_palettes</span> <span class="o">=</span> <span class="n">get_color_palettes</span><span class="p">()</span>
+<span class="n">color_palettes</span> <span class="o">=</span> <span class="n">get_color_palettes</span><span class="p">()</span>
+<span class="n">colors_ecc</span> <span class="o">=</span> <span class="n">color_palettes</span><span class="p">[</span><span class="s2">&quot;eccentricity&quot;</span><span class="p">]</span>
+<span class="n">colors_polar</span> <span class="o">=</span> <span class="n">color_palettes</span><span class="p">[</span><span class="s2">&quot;polar&quot;</span><span class="p">]</span>
+
+
+<span class="c1"># Setup paths</span>
+<span class="n">subject_session_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sub-</span><span class="si">{</span><span class="n">subject_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">fs_subject_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="n">subject_session_name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subject_session_name</span><span class="si">}</span><span class="s2">_iso&quot;</span><span class="p">)</span>
+<span class="n">surf_atlas_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fs_subject_path</span><span class="p">,</span> <span class="s2">&quot;surf&quot;</span><span class="p">)</span>
+<span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="n">subject_session_name</span><span class="p">)</span>
+<span class="n">pRF_params_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="s1">&#39;pRF_results&#39;</span><span class="p">,</span> <span class="n">projType</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;sub-</span><span class="si">{</span><span class="n">subject_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">base_save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="s1">&#39;pRF_results&#39;</span><span class="p">,</span> <span class="n">projType</span><span class="p">)</span>
+<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<br/><br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Load-data-for-a-single-participant">
+<h2><span class="section-number">2.2.2. </span>Load data for a single participant<a class="headerlink" href="#Load-data-for-a-single-participant" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load necessary data</span>
+<span class="n">v1_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;v1_centers.npy&quot;</span><span class="p">),</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+<span class="n">v1_rights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;v1_rights.npy&quot;</span><span class="p">),</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+
+<span class="c1"># Create subject and flatmaps</span>
+<span class="n">sub</span> <span class="o">=</span> <span class="n">ny</span><span class="o">.</span><span class="n">freesurfer_subject</span><span class="p">(</span><span class="n">fs_subject_path</span><span class="p">)</span>
+<span class="n">map_projs</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">ny</span><span class="o">.</span><span class="n">map_projection</span><span class="p">(</span><span class="n">chirality</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+                                <span class="n">center</span><span class="o">=</span><span class="n">v1_centers</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+                                <span class="n">center_right</span><span class="o">=</span><span class="n">v1_rights</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+                                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;orthographic&#39;</span><span class="p">,</span>
+                                <span class="n">radius</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
+                                <span class="n">registration</span><span class="o">=</span><span class="s1">&#39;native&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;lh&#39;</span><span class="p">,</span> <span class="s1">&#39;rh&#39;</span><span class="p">]}</span>
+<span class="n">flatmaps</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">mp</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">hemis</span><span class="p">[</span><span class="n">h</span><span class="p">])</span> <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">mp</span> <span class="ow">in</span> <span class="n">map_projs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Load-atlases-and-empirical-pRF-parameters-for-a-single-hemisphere">
+<h2><span class="section-number">2.2.3. </span>Load atlases and empirical pRF parameters for a single hemisphere<a class="headerlink" href="#Load-atlases-and-empirical-pRF-parameters-for-a-single-hemisphere" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="s1">&#39;lh&#39;</span>  <span class="c1"># Change this to &#39;lh&#39; or &#39;rh&#39; as needed</span>
+<span class="n">cortex_index</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span> <span class="c1"># Get cortex index</span>
+
+<span class="c1"># Load atlases</span>
+<span class="n">varea_map</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_varea.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
+<span class="n">benson_sigma</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_sigma.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
+<span class="n">benson_eccen</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_eccen.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
+<span class="n">benson_polar</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_angle.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
+<span class="n">wang15_map</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.wang15.curv&#39;</span><span class="p">))</span>
+
+
+<span class="c1"># Extract pRF parameters</span>
+<span class="n">hemisphere_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pRF_params_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;pRF_fits_</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">combined_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">hemisphere_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;pRF_parameters_</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">_combined.csv&#39;</span><span class="p">)</span>
+
+<span class="n">prf_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">combined_file</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Eccentricity</span>
+<span class="n">polar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Polar angle</span>
+<span class="n">sigma</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Plot-pRF-parameters">
+<h2><span class="section-number">2.2.4. </span>Plot pRF parameters<a class="headerlink" href="#Plot-pRF-parameters" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot pRF maps for a single hemisphere</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_maps</span><span class="p">(</span><span class="n">prf_results</span><span class="p">,</span> <span class="n">flatmaps</span><span class="p">,</span> <span class="n">colors_ecc</span><span class="p">,</span> <span class="n">colors_polar</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">r2_threshold</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># Plot histogram of pRF parameters</span>
+<span class="c1"># Define x-limits for each parameter</span>
+<span class="n">xlims</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>           <span class="c1"># Eccentricity: 0 to 10 degrees</span>
+    <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>   <span class="c1"># Polar angle: -π to π</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>           <span class="c1"># Sigma: 0 to 5 degrees</span>
+    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>            <span class="c1"># R²: 0 to 1</span>
+<span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_histograms</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r2_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">xlims</span><span class="o">=</span><span class="n">xlims</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Sigma range: 0.00 - 16.81
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/nicolas-gravel/Documents/GitHubProjects/retMaps/retmap/pRF_processing.py:170: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_9_2.png" src="../_images/notebooks_CF_modelling_9_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_9_3.png" src="../_images/notebooks_CF_modelling_9_3.png" />
+</div>
+</div>
+<section id="Define-CF-mapping-variables">
+<h3><span class="section-number">2.2.4.1. </span>Define CF mapping variables<a class="headerlink" href="#Define-CF-mapping-variables" title="Permalink to this heading">¶</a></h3>
+</section>
+</section>
+<section id="Choose-target-ROIs">
+<h2><span class="section-number">2.2.5. </span>Choose target ROIs<a class="headerlink" href="#Choose-target-ROIs" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># TARGET ROI:</span>
+
+<span class="n">target_rois</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;V2v&quot;</span><span class="p">,</span> <span class="s2">&quot;V2d&quot;</span><span class="p">,</span> <span class="s2">&quot;V3v&quot;</span><span class="p">,</span> <span class="s2">&quot;V3d&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># Map ROI names to Wang15 atlas indices</span>
+<span class="n">roi_name_to_index</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;V1v&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;V1d&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;V2v&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;V2d&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;V3v&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;V3d&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s2">&quot;hV4&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;VO1&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;VO2&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;PHC1&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;PHC2&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s2">&quot;TO2&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;TO1&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s2">&quot;LO2&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span> <span class="s2">&quot;LO1&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="s2">&quot;V3B&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s2">&quot;V3A&quot;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span> <span class="s2">&quot;IPS0&quot;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span> <span class="s2">&quot;IPS1&quot;</span><span class="p">:</span> <span class="mi">19</span><span class="p">,</span> <span class="s2">&quot;IPS2&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s2">&quot;IPS3&quot;</span><span class="p">:</span> <span class="mi">21</span><span class="p">,</span> <span class="s2">&quot;IPS4&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span> <span class="s2">&quot;IPS5&quot;</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span> <span class="s2">&quot;SPL1&quot;</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="s2">&quot;FEF&quot;</span><span class="p">:</span> <span class="mi">25</span>
+<span class="p">}</span>
+
+<span class="c1"># Get indices for target ROIs</span>
+<span class="n">target_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">roi_name_to_index</span><span class="p">[</span><span class="n">roi</span><span class="p">]</span> <span class="k">for</span> <span class="n">roi</span> <span class="ow">in</span> <span class="n">target_rois</span><span class="p">]</span>
+
+<span class="n">colmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Set3</span>
+<span class="n">n_target_rois</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_rois</span><span class="p">)</span>
+<span class="n">roi_colors</span> <span class="o">=</span> <span class="n">colmap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_target_rois</span><span class="p">))</span>
+
+
+
+<span class="n">roi_color_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">roi</span><span class="p">:</span> <span class="n">roi_colors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">roi</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">target_rois</span><span class="p">)}</span>
+
+<span class="c1"># Create ROI map with custom colors</span>
+<span class="n">roi_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">wang15_map</span><span class="p">[</span><span class="n">cortex_index</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+<span class="n">roi_colors_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="n">wang15_map</span><span class="p">[</span><span class="n">cortex_index</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">roi_name</span><span class="p">,</span> <span class="n">roi_idx</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">target_rois</span><span class="p">,</span> <span class="n">target_indices</span><span class="p">)):</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">wang15_map</span><span class="p">[</span><span class="n">cortex_index</span><span class="p">]</span> <span class="o">==</span> <span class="n">roi_idx</span>
+    <span class="n">roi_map</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Assign sequential numbers</span>
+    <span class="n">roi_colors_array</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+
+<span class="c1"># Create mask for target ROIs only</span>
+<span class="n">target_roi_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">wang15_map</span><span class="p">[</span><span class="n">cortex_index</span><span class="p">],</span> <span class="n">target_indices</span><span class="p">)</span>
+
+<span class="c1"># Create figure with two subplots: one for the brain, one for the legend</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">gs</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Brain plot</span>
+<span class="n">ax_brain</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+    <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+    <span class="n">axes</span><span class="o">=</span><span class="n">ax_brain</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="n">roi_colors_array</span><span class="p">,</span>
+    <span class="n">cmap</span><span class="o">=</span><span class="n">colmap</span><span class="p">,</span>
+    <span class="n">mask</span><span class="o">=</span><span class="n">target_roi_mask</span><span class="p">,</span>
+    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">vmax</span><span class="o">=</span><span class="n">n_target_rois</span><span class="o">-</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">ax_brain</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax_brain</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Target ROIs&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax_brain</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="c1"># Legend</span>
+<span class="n">ax_legend</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">legend_elements</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">Patch</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="n">roi_color_dict</span><span class="p">[</span><span class="n">roi</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">roi</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">roi</span> <span class="ow">in</span> <span class="n">target_rois</span>
+<span class="p">]</span>
+<span class="n">ax_legend</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_elements</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;center left&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ax_legend</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_12_0.png" src="../_images/notebooks_CF_modelling_12_0.png" />
+</div>
+</div>
+</section>
+<section id="Isolate-source-ROI-submesh">
+<h2><span class="section-number">2.2.6. </span>Isolate source ROI submesh<a class="headerlink" href="#Isolate-source-ROI-submesh" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SOURCE ROI:</span>
+
+
+<span class="c1"># Select source ROI and mask</span>
+<span class="n">roi_selection</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="c1">#ecc_range=(0.75, 6.75)</span>
+<span class="n">ecc_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">)</span>
+
+
+
+<span class="c1"># Create mask for V1 (regions 0 and 1 in Wang atlas)</span>
+<span class="n">roi_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">wang15_map</span><span class="p">[</span><span class="n">cortex_index</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># V1v and V1d</span>
+
+<span class="c1">## Use Benson eccentricity to narrow down the source ROI extent</span>
+<span class="n">param_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">benson_eccen</span> <span class="o">&gt;</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">benson_eccen</span> <span class="o">&lt;</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">pol_mask</span> <span class="o">=</span>  <span class="p">(</span><span class="n">benson_polar</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">benson_polar</span> <span class="o">&lt;=</span> <span class="mi">135</span><span class="p">)</span>
+<span class="n">source_mask</span> <span class="o">=</span> <span class="n">roi_mask</span> <span class="o">&amp;</span> <span class="n">param_mask</span> <span class="o">&amp;</span> <span class="n">pol_mask</span>
+
+
+<span class="c1"># Extract ROI submesh (and update vertex indices)</span>
+<span class="n">roi_submesh</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">submesh</span><span class="p">(</span><span class="n">source_mask</span><span class="p">)</span>
+<span class="n">roi_submesh</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="n">submesh_labels</span> <span class="o">=</span> <span class="n">roi_submesh</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
+<span class="n">sub_source_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">submesh_labels</span><span class="p">)</span>
+
+
+
+<span class="c1"># Get the exact indices of your source vertices</span>
+<span class="n">source_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sub_source_mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">target_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">target_roi_mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of source vertices: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">source_indices</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of target vertices: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">target_indices</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of source vertices: 863
+Number of target vertices: 2486
+</pre></div></div>
+</div>
+</section>
+<section id="2.--Establish-retinotopic-coordinates-within-the-source-ROI-(V1)">
+<h2><span class="section-number">2.2.7. </span>2.- Establish retinotopic coordinates within the source ROI (V1)<a class="headerlink" href="#2.--Establish-retinotopic-coordinates-within-the-source-ROI-(V1)" title="Permalink to this heading">¶</a></h2>
+<p>In order to use atlas-based retinotopy in the abscence of visual field mapping (<em>e.g.</em> in congenital blindness), we need to assess a number of questions. First, how do empirical and atlas based retinotopic map for the source ROI (V1) compare?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### V1 reference retinotopy from pRF mapping</span>
+<span class="n">plot_roi_retMap</span><span class="p">(</span><span class="n">ecc</span><span class="p">,</span> <span class="n">polar</span><span class="p">,</span> <span class="n">sub_source_mask</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;pRF eccentricity&#39;</span><span class="p">,</span> <span class="s1">&#39;pRF polar angle&#39;</span><span class="p">],</span> <span class="n">flatmaps</span><span class="p">,</span> <span class="n">colors_ecc</span><span class="p">,</span> <span class="n">colors_polar</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+<span class="c1">### V1 reference retinotopy from Benson atlas</span>
+<span class="n">plot_roi_retMap</span><span class="p">(</span><span class="n">benson_eccen</span><span class="p">,</span> <span class="n">benson_polar</span><span class="p">,</span> <span class="n">sub_source_mask</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Template eccentricity&#39;</span><span class="p">,</span> <span class="s1">&#39;Template polar angle&#39;</span><span class="p">],</span> <span class="n">flatmaps</span><span class="p">,</span> <span class="n">colors_ecc</span><span class="p">,</span> <span class="n">colors_polar</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+
+<span class="c1">### How do empirical and atlas based retinotopic map for the source ROI (V1) compare?</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">sub_source_mask</span>
+
+<span class="n">ecc_pRF</span> <span class="o">=</span> <span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">pol_pRF</span> <span class="o">=</span> <span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">ecc_atlas</span> <span class="o">=</span> <span class="n">benson_eccen</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">pol_atlas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">benson_polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="c1"># Compute circular correlation</span>
+<span class="n">corr_pol</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">pol_pRF</span><span class="p">,</span> <span class="n">pol_atlas</span><span class="p">)</span>
+<span class="n">corr_pol_rho</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">corr_pol_pval</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">corr_ecc_rho</span><span class="p">,</span> <span class="n">corr_ecc_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">ecc_pRF</span><span class="p">,</span> <span class="n">ecc_atlas</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Pearson&#39;s rho (p-value) : &quot;</span><span class="p">,</span> <span class="n">corr_ecc_rho</span><span class="p">,</span><span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="n">corr_ecc_pval</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Circular rho  (p-value) : &quot;</span><span class="p">,</span> <span class="n">corr_pol_rho</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="n">corr_pol_pval</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+
+
+<span class="c1"># Scatter plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_ecc</span><span class="p">,</span> <span class="n">ax_pol</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">scatter_size</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pRF vs atlas -derived retinotopic selectivity in V1&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">ecc_color</span> <span class="o">=</span> <span class="s2">&quot;#145A8C&quot;</span>
+<span class="n">pol_color</span> <span class="o">=</span> <span class="s2">&quot;#9A1D1D&quot;</span>
+
+<span class="c1"># Eccentricity scatter plot</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ecc_pRF</span><span class="p">,</span> <span class="n">ecc_atlas</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">scatter_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">ecc_color</span><span class="p">)</span>
+<span class="n">max_ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">ecc_pRF</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">ecc_atlas</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;pRF eccentricity (deg)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Atlas eccentricity (deg)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Pearson&#39;s ρ=</span><span class="si">{</span><span class="n">corr_ecc_rho</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_ecc</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+<span class="c1"># Polar angle scatter plot</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pol_pRF</span><span class="p">,</span> <span class="n">pol_atlas</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">scatter_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">pol_color</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;pRF polar angle (rad)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Atlas polar angle (rad)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Circular ρ=</span><span class="si">{</span><span class="n">corr_pol_rho</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_pol</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/nicolas-gravel/Documents/GitHubProjects/retMaps/retmap/pRF_processing.py:365: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_16_1.png" src="../_images/notebooks_CF_modelling_16_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_16_2.png" src="../_images/notebooks_CF_modelling_16_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Pearson&#39;s rho (p-value) :  0.7483627504391225 ( 1.112482421514632e-155 )
+
+Circular rho  (p-value) :  0.8231211731234961 ( 1.0776404524163543e-127 )
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_16_4.png" src="../_images/notebooks_CF_modelling_16_4.png" />
+</div>
+</div>
+</section>
+<section id="Obtain-a-cortical-distance-within-source-ROI-(V1)">
+<h2><span class="section-number">2.2.8. </span>Obtain a cortical distance within source ROI (V1)<a class="headerlink" href="#Obtain-a-cortical-distance-within-source-ROI-(V1)" title="Permalink to this heading">¶</a></h2>
+<p>This must be in millimeters of cortical distances and is typically obtained using the Dijkstra’s algorithm for the shortest patch of connected vertices within a mesh.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get cortical distance matrix for these specific vertices</span>
+<span class="n">roi_submesh</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">submesh</span><span class="p">(</span><span class="n">source_mask</span><span class="p">)</span>
+<span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">roi_submesh</span><span class="o">.</span><span class="n">dijkstra</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distance matrix shape: </span><span class="si">{</span><span class="n">distance_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1">### Plot V1 cortical distance matrix</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">distance_matrix</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Cortical distance (mm)&#39;</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>  <span class="c1"># Shrunk colorbar height</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Source ROI cortical distance matrix&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;V1 vertex i&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;V1 vertex j&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Distance matrix shape: (863, 863)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_18_1.png" src="../_images/notebooks_CF_modelling_18_1.png" />
+</div>
+</div>
+<section id="CF-modelling!">
+<h3><span class="section-number">2.2.8.1. </span>CF modelling!<a class="headerlink" href="#CF-modelling!" title="Permalink to this heading">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pRF_params_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">_averaged_cleaned_zscored.npy&#39;</span><span class="p">)</span>
+<span class="n">time_series</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_path</span><span class="p">))</span>
+<span class="n">source_data</span> <span class="o">=</span> <span class="n">time_series</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span>
+<span class="c1">#target_data = time_series[sub_target_mask]</span>
+<span class="n">target_data</span> <span class="o">=</span> <span class="n">time_series</span><span class="p">[</span><span class="n">target_roi_mask</span><span class="p">]</span>
+<span class="k">del</span> <span class="n">time_series</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Source data :&#39;</span><span class="p">,</span> <span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Target data :&#39;</span><span class="p">,</span> <span class="n">target_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Create stimulus with matching indices</span>
+<span class="n">roi_submesh</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">submesh</span><span class="p">(</span><span class="n">source_mask</span><span class="p">)</span>
+<span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">roi_submesh</span><span class="o">.</span><span class="n">dijkstra</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">source_stim</span> <span class="o">=</span> <span class="n">CFStimulus</span><span class="p">(</span>
+    <span class="n">source_data</span><span class="p">,</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">source_data</span><span class="p">)),</span>  <span class="c1"># Use exact length of source data</span>
+    <span class="n">distance_matrix</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Source data shape: </span><span class="si">{</span><span class="n">source_data</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Design matrix shape: </span><span class="si">{</span><span class="n">source_stim</span><span class="o">.</span><span class="n">design_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">del</span> <span class="n">distance_matrix</span>
+
+<span class="c1"># Create model and fitter</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">CFGaussianModel</span><span class="p">(</span><span class="n">source_stim</span><span class="p">)</span>
+<span class="n">gf</span> <span class="o">=</span> <span class="n">CFFitter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">target_data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+
+
+<span class="c1"># Define search grid for Gaussian width (sigmas)</span>
+<span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of elements: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">sigmas</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Sigma values :&quot;</span><span class="p">,</span> <span class="n">sigmas</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Source data : (863, 150)
+
+Target data : (2486, 150)
+Source data shape: (863, 150)
+Design matrix shape: (863, 150)
+Number of elements: 20
+
+Sigma values : [ 0.5         1.26315789  2.02631579  2.78947368  3.55263158  4.31578947
+  5.07894737  5.84210526  6.60526316  7.36842105  8.13157895  8.89473684
+  9.65789474 10.42105263 11.18421053 11.94736842 12.71052632 13.47368421
+ 14.23684211 15.        ]
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Model-optimization">
+<h2><span class="section-number">2.2.9. </span>Model optimization<a class="headerlink" href="#Model-optimization" title="Permalink to this heading">¶</a></h2>
+<ul>
+<li><p>Cortical distances for source ROI obtained from <em>sub-mesh</em></p></li>
+<li><p>CF candidate sizes provided</p></li>
+<li><p>Grid search implemented in <code class="docutils literal notranslate"><span class="pre">sci-kit</span> <span class="pre">learn</span></code></p></li>
+<li><p>Iterative search implemented as:</p>
+<ul class="simple">
+<li><p>Linear minimization in <code class="docutils literal notranslate"><span class="pre">sci-py</span></code></p></li>
+<li><p>Gradient descent based on automatic differentiation (<code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>)</p></li>
+</ul>
+</li>
+<li><p>Input data dimensions (<em>vertices x time</em>):</p>
+<ul class="simple">
+<li><p>source : 863, 150</p></li>
+<li><p>target : 2486, 150</p></li>
+</ul>
+<p>1.- Powell, M J D. (1964). <strong>An efficient method for finding the minimum of a function of several variables without calculating derivatives</strong>. The Computer Journal 7: 155-162.</p>
+<p>2.- Powell M J D. (2007). <strong>A view of algorithms for optimization without derivatives</strong>. Cambridge University Technical Report DAMTP, 2007/NA03</p>
+</li>
+</ul>
+</section>
+<section id="Grid-fit-using-least-squares-prediction-optimization">
+<h2><span class="section-number">2.2.10. </span>Grid fit using <strong>least-squares</strong> prediction optimization<a class="headerlink" href="#Grid-fit-using-least-squares-prediction-optimization" title="Permalink to this heading">¶</a></h2>
+<p>Takes ~<strong>35s</strong> using <code class="docutils literal notranslate"><span class="pre">numpy</span></code> (implemented in <code class="docutils literal notranslate"><span class="pre">prfpy</span></code>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># After running grid_fit</span>
+<span class="n">gf</span><span class="o">.</span><span class="n">grid_fit</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_batches</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Each batch contains approx. 25 voxels.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[Parallel(n_jobs=1)]: Done  49 tasks      | elapsed:   11.1s
+[Parallel(n_jobs=1)]: Done 100 out of 100 | elapsed:   23.6s finished
+</pre></div></div>
+</div>
+</section>
+<section id="Iterative-fit-using-derivative-free-minimization">
+<h2><span class="section-number">2.2.11. </span>Iterative fit using <strong>derivative-free</strong> minimization<a class="headerlink" href="#Iterative-fit-using-derivative-free-minimization" title="Permalink to this heading">¶</a></h2>
+<p>Takes ~<strong>25s</strong> using derivative-free linear minimization (<em>Powell</em> algorithm in <code class="docutils literal notranslate"><span class="pre">scipy</span></code>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2_threshold</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optimize using BFGS</span>
+<span class="n">optimized_results</span> <span class="o">=</span> <span class="n">optimize_connfield_dfree</span><span class="p">(</span>
+    <span class="n">gf</span><span class="p">,</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span><span class="p">,</span>
+    <span class="n">sigma_bounds</span><span class="o">=</span><span class="p">[(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">)],</span>
+    <span class="n">method</span><span class="o">=</span><span class="s1">&#39;L-BFGS-B&#39;</span><span class="p">,</span> <span class="c1">#&#39;COBYQA&#39;</span>
+    <span class="n">tol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Optimizing 2469 of 2486 sites (r2 &gt;= 0.1)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Optimizing CFs: 100%|██████████| 2469/2469 [00:22&lt;00:00, 111.96it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Optimization complete!
+Mean sigma change: 0.735 mm
+Mean r2 improvement: -0.0008
+Optimized sigma range: 0.10 - 20.00 mm
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+</section>
+<section id="Iterative-fit-using-automatic-differentiation">
+<h2><span class="section-number">2.2.12. </span>Iterative fit using <strong>automatic differentiation</strong><a class="headerlink" href="#Iterative-fit-using-automatic-differentiation" title="Permalink to this heading">¶</a></h2>
+<p>Depending on optimization parameters(learning rate, convergence threshold, batch size, etc), can take between <strong>1m 18s</strong> to <strong>12s</strong> (with <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>and <code class="docutils literal notranslate"><span class="pre">cuda</span></code> v.12.8 in an NVIDIA RTX 1000 Ada GPU).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optimize using TensorFlow GPU</span>
+<span class="n">gradescent_results</span> <span class="o">=</span> <span class="n">optimize_connfield_gdescent</span><span class="p">(</span>
+    <span class="n">gf</span><span class="p">,</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span><span class="p">,</span>
+    <span class="n">sigma_bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">),</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>  <span class="c1"># Lower for stability</span>
+    <span class="n">max_iterations</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+    <span class="n">convergence_threshold</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>  <span class="c1"># Adjust based on GPU memory</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2025-10-12 14:59:04.272615: I tensorflow/core/util/port.cc:113] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2025-10-12 14:59:04.298378: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2025-10-12 14:59:04.298408: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-10-12 14:59:04.299742: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2025-10-12 14:59:04.305202: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE4.1 SSE4.2 AVX AVX2 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2025-10-12 14:59:10.980008: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.029380: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.032104: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.038660: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.041345: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.043931: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.153776: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.155244: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.156654: I external/local_xla/xla/stream_executor/cuda/cuda_executor.cc:998] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero. See more at https://github.com/torvalds/linux/blob/v6.0/Documentation/ABI/testing/sysfs-bus-pci#L344-L355
+2025-10-12 14:59:11.157963: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1928] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 4146 MB memory:  -&gt; device: 0, name: NVIDIA RTX 1000 Ada Generation Laptop GPU, pci bus id: 0000:01:00.0, compute capability: 8.9
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+============================================================
+TENSORFLOW GPU PARALLEL OPTIMIZATION
+============================================================
+Optimizing 2469 of 2486 sites (r2 &gt;= 0.1)
+Batch size: 5000
+GPU: /physical_device:GPU:0
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+GPU batches: 100%|██████████| 1/1 [00:05&lt;00:00,  5.46s/it]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+============================================================
+OPTIMIZATION COMPLETE
+============================================================
+
+Sigma changes:
+  Mean |Δσ|: 0.822 mm
+  Max |Δσ|: 19.500 mm
+
+R² improvements:
+  Mean ΔR²: -0.0016
+  Sites improved: 2323 (94.1%)
+============================================================
+</pre></div></div>
+</div>
+</section>
+<section id="Iterative-alternating-fit-for-joint-optimization-of-CF-size-and-position">
+<h2><span class="section-number">2.2.13. </span>Iterative alternating fit for <strong>joint optimization</strong> of CF size and position<a class="headerlink" href="#Iterative-alternating-fit-for-joint-optimization-of-CF-size-and-position" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">joint_optimization</span> <span class="o">=</span> <span class="n">optimize_connfield_joint</span><span class="p">(</span>
+    <span class="n">gf</span><span class="p">,</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span><span class="p">,</span>
+    <span class="n">sigma_bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">),</span>
+    <span class="n">max_outer_iterations</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">max_inner_iterations</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
+    <span class="n">search_radius</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+
+<span class="n">cycle_stats</span> <span class="o">=</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;cycle_statistics&#39;</span><span class="p">]</span>
+
+
+<span class="c1"># Summary table</span>
+<span class="n">fig1</span> <span class="o">=</span> <span class="n">plot_convergence_summary_table</span><span class="p">(</span><span class="n">cycle_stats</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;optimization_summary_table.png&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+============================================================
+GPU-PARALLELIZED ALTERNATING OPTIMIZATION
+============================================================
+Optimizing 2469 of 2486 sites
+Cycles: 20, Batch: 300
+GPU: /physical_device:GPU:0
+Max neighbors: 863, Search radius: 50 mm
+
+--- Cycle 1/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 1:   0%|          | 0/9 [00:00&lt;?, ?it/s]Cycle 1: 100%|██████████| 9/9 [00:07&lt;00:00,  1.20it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 2328/2469 sites (94.3%)
+  Position changes: 2 sites (0.1%)
+  Mean |Δσ|: 0.084 mm
+  Mean R²: 0.5770
+  Mean ΔR²: 0.0022
+
+--- Cycle 2/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 2: 100%|██████████| 9/9 [00:04&lt;00:00,  2.14it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 2066/2469 sites (83.7%)
+  Position changes: 43 sites (1.7%)
+  Mean |Δσ|: 0.021 mm
+  Mean R²: 0.5777
+  Mean ΔR²: 0.0006
+
+--- Cycle 3/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 3: 100%|██████████| 9/9 [00:03&lt;00:00,  2.57it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1893/2469 sites (76.7%)
+  Position changes: 13 sites (0.5%)
+  Mean |Δσ|: 0.011 mm
+  Mean R²: 0.5780
+  Mean ΔR²: 0.0003
+
+--- Cycle 4/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 4: 100%|██████████| 9/9 [00:03&lt;00:00,  2.70it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1753/2469 sites (71.0%)
+  Position changes: 11 sites (0.4%)
+  Mean |Δσ|: 0.009 mm
+  Mean R²: 0.5782
+  Mean ΔR²: 0.0003
+
+--- Cycle 5/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 5: 100%|██████████| 9/9 [00:03&lt;00:00,  2.63it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1631/2469 sites (66.1%)
+  Position changes: 5 sites (0.2%)
+  Mean |Δσ|: 0.008 mm
+  Mean R²: 0.5785
+  Mean ΔR²: 0.0002
+
+--- Cycle 6/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 6: 100%|██████████| 9/9 [00:03&lt;00:00,  2.70it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1522/2469 sites (61.6%)
+  Position changes: 6 sites (0.2%)
+  Mean |Δσ|: 0.007 mm
+  Mean R²: 0.5787
+  Mean ΔR²: 0.0002
+
+--- Cycle 7/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 7: 100%|██████████| 9/9 [00:03&lt;00:00,  2.55it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1448/2469 sites (58.6%)
+  Position changes: 4 sites (0.2%)
+  Mean |Δσ|: 0.006 mm
+  Mean R²: 0.5788
+  Mean ΔR²: 0.0002
+
+--- Cycle 8/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 8: 100%|██████████| 9/9 [00:03&lt;00:00,  2.58it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1388/2469 sites (56.2%)
+  Position changes: 3 sites (0.1%)
+  Mean |Δσ|: 0.005 mm
+  Mean R²: 0.5790
+  Mean ΔR²: 0.0002
+
+--- Cycle 9/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 9: 100%|██████████| 9/9 [00:03&lt;00:00,  2.56it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1347/2469 sites (54.6%)
+  Position changes: 6 sites (0.2%)
+  Mean |Δσ|: 0.004 mm
+  Mean R²: 0.5791
+  Mean ΔR²: 0.0001
+
+--- Cycle 10/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 10: 100%|██████████| 9/9 [00:03&lt;00:00,  2.48it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1297/2469 sites (52.5%)
+  Position changes: 4 sites (0.2%)
+  Mean |Δσ|: 0.004 mm
+  Mean R²: 0.5793
+  Mean ΔR²: 0.0001
+
+--- Cycle 11/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 11: 100%|██████████| 9/9 [00:03&lt;00:00,  2.58it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1254/2469 sites (50.8%)
+  Position changes: 3 sites (0.1%)
+  Mean |Δσ|: 0.004 mm
+  Mean R²: 0.5794
+  Mean ΔR²: 0.0001
+
+--- Cycle 12/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 12: 100%|██████████| 9/9 [00:03&lt;00:00,  2.39it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1220/2469 sites (49.4%)
+  Position changes: 5 sites (0.2%)
+  Mean |Δσ|: 0.003 mm
+  Mean R²: 0.5795
+  Mean ΔR²: 0.0001
+
+--- Cycle 13/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 13: 100%|██████████| 9/9 [00:03&lt;00:00,  2.55it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1190/2469 sites (48.2%)
+  Position changes: 7 sites (0.3%)
+  Mean |Δσ|: 0.003 mm
+  Mean R²: 0.5796
+  Mean ΔR²: 0.0001
+
+--- Cycle 14/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 14: 100%|██████████| 9/9 [00:03&lt;00:00,  2.59it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1165/2469 sites (47.2%)
+  Position changes: 5 sites (0.2%)
+  Mean |Δσ|: 0.003 mm
+  Mean R²: 0.5797
+  Mean ΔR²: 0.0001
+
+--- Cycle 15/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 15: 100%|██████████| 9/9 [00:03&lt;00:00,  2.53it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1150/2469 sites (46.6%)
+  Position changes: 3 sites (0.1%)
+  Mean |Δσ|: 0.003 mm
+  Mean R²: 0.5797
+  Mean ΔR²: 0.0001
+
+--- Cycle 16/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 16: 100%|██████████| 9/9 [00:03&lt;00:00,  2.59it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1134/2469 sites (45.9%)
+  Position changes: 5 sites (0.2%)
+  Mean |Δσ|: 0.002 mm
+  Mean R²: 0.5798
+  Mean ΔR²: 0.0001
+
+--- Cycle 17/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 17: 100%|██████████| 9/9 [00:03&lt;00:00,  2.44it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1113/2469 sites (45.1%)
+  Position changes: 1 sites (0.0%)
+  Mean |Δσ|: 0.002 mm
+  Mean R²: 0.5799
+  Mean ΔR²: 0.0001
+
+--- Cycle 18/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 18: 100%|██████████| 9/9 [00:03&lt;00:00,  2.48it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1101/2469 sites (44.6%)
+  Position changes: 0 sites (0.0%)
+  Mean |Δσ|: 0.002 mm
+  Mean R²: 0.5799
+  Mean ΔR²: 0.0001
+
+--- Cycle 19/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 19: 100%|██████████| 9/9 [00:03&lt;00:00,  2.51it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1093/2469 sites (44.3%)
+  Position changes: 3 sites (0.1%)
+  Mean |Δσ|: 0.002 mm
+  Mean R²: 0.5800
+  Mean ΔR²: 0.0000
+
+--- Cycle 20/20 ---
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Cycle 20: 100%|██████████| 9/9 [00:03&lt;00:00,  2.57it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+  Improved: 1079/2469 sites (43.7%)
+  Position changes: 0 sites (0.0%)
+  Mean |Δσ|: 0.002 mm
+  Mean R²: 0.5800
+  Mean ΔR²: 0.0000
+
+============================================================
+FINAL RESULTS (from initial grid search)
+============================================================
+
+Total position changes:
+  Sites moved: 114 (4.6%)
+
+Total sigma changes:
+  Mean |Δσ|: 0.183 mm
+  Median |Δσ|: 0.203 mm
+  Max |Δσ|: 2.014 mm
+
+Total R² improvements:
+  Mean ΔR²: 0.0052
+  Median ΔR²: 0.0016
+  Sites improved: 2326 (94.2%)
+  Mean final R²: 0.5800
+============================================================
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_30_41.png" src="../_images/notebooks_CF_modelling_30_41.png" />
+</div>
+</div>
+</section>
+<section id="How-do-different-optimization-strategies-compare?">
+<h2><span class="section-number">2.2.14. </span>How do different optimization strategies compare?<a class="headerlink" href="#How-do-different-optimization-strategies-compare?" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">CF_centers_grid</span> <span class="o">=</span> <span class="n">gf</span><span class="o">.</span><span class="n">gridsearch_params</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">CF_ecc_grid</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">CF_centers_grid</span><span class="p">]</span>
+<span class="n">CF_polar_grid</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">CF_centers_grid</span><span class="p">]</span>
+<span class="n">sigma_grid</span> <span class="o">=</span> <span class="n">gf</span><span class="o">.</span><span class="n">gridsearch_params</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">rsq_grid</span> <span class="o">=</span> <span class="n">gf</span><span class="o">.</span><span class="n">gridsearch_r2</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_histograms</span><span class="p">(</span>
+    <span class="n">CF_ecc_grid</span><span class="p">,</span> <span class="n">CF_polar_grid</span><span class="p">,</span> <span class="n">sigma_grid</span><span class="p">,</span> <span class="n">rsq_grid</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
+    <span class="n">ylims</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">350</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">450</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">700</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">)],</span>
+    <span class="n">xlims</span><span class="o">=</span><span class="p">[(</span><span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Prediction grid optimization (residual sum of the squares)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># Extract optimized parameters</span>
+<span class="n">CF_centers_opt</span> <span class="o">=</span> <span class="n">optimized_results</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sigma_opt</span> <span class="o">=</span> <span class="n">optimized_results</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span>
+<span class="n">r2_opt</span> <span class="o">=</span> <span class="n">optimized_results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span>
+
+<span class="c1"># Get retinotopic properties of optimized CF centers</span>
+<span class="n">CF_ecc_opt</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">CF_centers_opt</span><span class="p">]</span>
+<span class="n">CF_polar_opt</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">CF_centers_opt</span><span class="p">]</span>
+
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_histograms</span><span class="p">(</span>
+    <span class="n">CF_ecc_opt</span><span class="p">,</span> <span class="n">CF_polar_opt</span><span class="p">,</span> <span class="n">sigma_opt</span><span class="p">,</span> <span class="n">r2_opt</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
+    <span class="n">ylims</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">350</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">450</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">)],</span>
+    <span class="n">xlims</span><span class="o">=</span><span class="p">[(</span><span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Iterative optimization (direct-search)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># Extract optimized parameters</span>
+<span class="n">CF_centers_opt</span> <span class="o">=</span> <span class="n">gradescent_results</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sigma_opt</span> <span class="o">=</span> <span class="n">gradescent_results</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span>
+<span class="n">r2_opt</span> <span class="o">=</span> <span class="n">gradescent_results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span>
+
+<span class="c1"># Get retinotopic properties of optimized CF centers</span>
+<span class="n">CF_ecc_opt</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">CF_centers_opt</span><span class="p">]</span>
+<span class="n">CF_polar_opt</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">CF_centers_opt</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_histograms</span><span class="p">(</span>
+    <span class="n">CF_ecc_opt</span><span class="p">,</span> <span class="n">CF_polar_opt</span><span class="p">,</span> <span class="n">sigma_opt</span><span class="p">,</span> <span class="n">r2_opt</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
+    <span class="n">ylims</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">350</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">450</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">)],</span>
+    <span class="n">xlims</span><span class="o">=</span><span class="p">[(</span><span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Gradient descent (automatic differentiation)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1"># Extract optimized parameters</span>
+<span class="n">CF_centers_opt</span> <span class="o">=</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">sigma_opt</span> <span class="o">=</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span>
+<span class="n">r2_opt</span> <span class="o">=</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span>
+
+<span class="c1"># Get retinotopic properties of optimized CF centers</span>
+<span class="n">CF_ecc_opt</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">CF_centers_opt</span><span class="p">]</span>
+<span class="n">CF_polar_opt</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">CF_centers_opt</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_histograms</span><span class="p">(</span>
+    <span class="n">CF_ecc_opt</span><span class="p">,</span> <span class="n">CF_polar_opt</span><span class="p">,</span> <span class="n">sigma_opt</span><span class="p">,</span> <span class="n">r2_opt</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
+    <span class="n">ylims</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">350</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">450</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">)],</span>
+    <span class="n">xlims</span><span class="o">=</span><span class="p">[(</span><span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Gradient descent (joint optimization)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_32_0.png" src="../_images/notebooks_CF_modelling_32_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_32_1.png" src="../_images/notebooks_CF_modelling_32_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_32_2.png" src="../_images/notebooks_CF_modelling_32_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_32_3.png" src="../_images/notebooks_CF_modelling_32_3.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grid fit</span>
+<span class="n">results_A</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;centers&#39;</span><span class="p">:</span> <span class="n">gf</span><span class="o">.</span><span class="n">gridsearch_params</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="n">gf</span><span class="o">.</span><span class="n">gridsearch_params</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="n">gf</span><span class="o">.</span><span class="n">gridsearch_r2</span><span class="p">,</span>
+    <span class="s1">&#39;opType&#39;</span> <span class="p">:</span><span class="s1">&#39;Grid search&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Iterative fit</span>
+<span class="n">results_A</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;centers&#39;</span><span class="p">:</span> <span class="n">optimized_results</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="n">optimized_results</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="n">optimized_results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;opType&#39;</span> <span class="p">:</span><span class="s1">&#39;Iterative search&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Gradient descent</span>
+<span class="n">results_X</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;centers&#39;</span><span class="p">:</span> <span class="n">gradescent_results</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="n">gradescent_results</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="n">gradescent_results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;opType&#39;</span> <span class="p">:</span><span class="s1">&#39;Gradient descent&#39;</span>
+<span class="p">}</span>
+
+
+<span class="c1"># Joint-optimization</span>
+<span class="n">results_B</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;centers&#39;</span><span class="p">:</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;opType&#39;</span> <span class="p">:</span><span class="s1">&#39;Joint optimization&#39;</span>
+<span class="p">}</span>
+
+
+
+
+<span class="c1"># Compare results</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">compare_cf_results</span><span class="p">(</span>
+    <span class="n">results_A</span><span class="o">=</span><span class="n">results_A</span><span class="p">,</span>
+    <span class="n">results_B</span><span class="o">=</span><span class="n">results_B</span><span class="p">,</span>
+    <span class="n">ecc_pRF</span><span class="o">=</span><span class="n">ecc_pRF</span><span class="p">,</span>
+    <span class="n">pol_pRF</span><span class="o">=</span><span class="n">pol_pRF</span><span class="p">,</span>
+    <span class="n">target_roi_mask</span><span class="o">=</span><span class="n">target_roi_mask</span><span class="p">,</span>
+    <span class="n">flatmaps</span><span class="o">=</span><span class="n">flatmaps</span><span class="p">,</span>
+    <span class="n">colors_ecc</span><span class="o">=</span><span class="n">colors_ecc</span><span class="p">,</span>
+    <span class="n">colors_polar</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">,</span>
+    <span class="n">h</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
+    <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span><span class="p">,</span>
+    <span class="n">ecc_div</span><span class="o">=</span><span class="mi">2</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/nicolas-gravel/Documents/GitHubProjects/retMaps/retmap/CF_mapping.py:1019: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  plt.tight_layout()
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+============================================================
+Optimization approach comparison
+============================================================
+
+R² threshold: 0.1
+Sites above threshold: 2409
+
+
+Iterative search
+Sigma range: 0.10 - 20.00 mm
+Mean sigma: 1.60 mm
+Mean R²: 0.5873
+
+
+Joint optimization
+Sigma range: 0.13 - 17.01 mm
+Mean sigma: 1.50 mm
+Mean R²: 0.5895
+
+--- Improvements ---
+Mean |Δσ|: 0.222 mm
+Mean ΔR²: 0.0022
+Median ΔR²: 0.0000
+Sites with improved R²: 1272 (52.8%)
+============================================================
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_34_2.png" src="../_images/notebooks_CF_modelling_34_2.png" />
+</div>
+</div>
+</section>
+<section id="Run-to-run-reliability-tests">
+<h2><span class="section-number">2.2.15. </span>Run-to-run reliability tests<a class="headerlink" href="#Run-to-run-reliability-tests" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get CF results for target ROI</span>
+
+<span class="n">results_B</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;centers&#39;</span><span class="p">:</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+    <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="n">joint_optimization</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;opType&#39;</span> <span class="p">:</span><span class="s1">&#39;Joint optimization&#39;</span>
+<span class="p">}</span>
+
+
+<span class="n">mask</span> <span class="o">=</span> <span class="n">target_roi_mask</span>
+
+<span class="c1"># CF-derived retinotopy (from source ROI centers)</span>
+<span class="n">CF_ecc</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+<span class="n">CF_pol</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+
+<span class="c1"># Direct pRF measurements in target ROI</span>
+<span class="n">target_ecc</span> <span class="o">=</span> <span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">target_pol</span> <span class="o">=</span> <span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="c1"># Compute correlations</span>
+<span class="n">corr_ecc_rho</span><span class="p">,</span> <span class="n">corr_ecc_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">CF_ecc</span><span class="p">,</span> <span class="n">target_ecc</span><span class="p">)</span>
+<span class="n">corr_pol</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">CF_pol</span><span class="p">,</span> <span class="n">target_pol</span><span class="p">)</span>
+<span class="n">corr_pol_rho</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">corr_pol_pval</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Eccentricity - Pearson&#39;s ρ: </span><span class="si">{</span><span class="n">corr_ecc_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (p=</span><span class="si">{</span><span class="n">corr_ecc_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Polar angle - Circular ρ: </span><span class="si">{</span><span class="n">corr_pol_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (p=</span><span class="si">{</span><span class="n">corr_pol_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Scatter plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_ecc</span><span class="p">,</span> <span class="n">ax_pol</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">scatter_size</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Average VFM CF-derived vs pRF-measured retinotopy in target ROIs&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+
+<span class="n">ecc_color</span> <span class="o">=</span> <span class="s2">&quot;#145A8C&quot;</span>
+<span class="n">pol_color</span> <span class="o">=</span> <span class="s2">&quot;#9A1D1D&quot;</span>
+
+<span class="c1"># Eccentricity</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">CF_ecc</span><span class="p">,</span> <span class="n">target_ecc</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">scatter_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">ecc_color</span><span class="p">)</span>
+<span class="n">max_ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">CF_ecc</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">target_ecc</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;CF-derived eccentricity (deg)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;pRF eccentricity (deg)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Pearson&#39;s ρ = </span><span class="si">{</span><span class="n">corr_ecc_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">p = </span><span class="si">{</span><span class="n">corr_ecc_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_ecc</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">ax_ecc</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Polar angle</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">CF_pol</span><span class="p">,</span> <span class="n">target_pol</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">scatter_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">pol_color</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;CF-derived polar angle (rad)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;pRF polar angle (rad)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Circular ρ = </span><span class="si">{</span><span class="n">corr_pol_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="se">\n</span><span class="s2">p = </span><span class="si">{</span><span class="n">corr_pol_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_pol</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s1">&#39;round&#39;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">))</span>
+<span class="n">ax_pol</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+Eccentricity - Pearson&#39;s ρ: 0.797 (p=0.00e+00)
+Polar angle - Circular ρ: 0.515 (p=1.23e-143)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/notebooks_CF_modelling_36_1.png" src="../_images/notebooks_CF_modelling_36_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load all runs and compute CF for each</span>
+<span class="n">run_results</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">run_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing Run </span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">60</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Load run data</span>
+    <span class="n">ts_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pRF_params_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">_run_</span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s1">_cleaned_zscored.npy&#39;</span><span class="p">)</span>
+    <span class="n">time_series</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_path</span><span class="p">))</span>
+    <span class="n">source_data</span> <span class="o">=</span> <span class="n">time_series</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span>
+    <span class="n">target_data</span> <span class="o">=</span> <span class="n">time_series</span><span class="p">[</span><span class="n">target_roi_mask</span><span class="p">]</span>
+    <span class="k">del</span> <span class="n">time_series</span>
+
+    <span class="c1"># Create stimulus and model</span>
+    <span class="n">roi_submesh</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">submesh</span><span class="p">(</span><span class="n">source_mask</span><span class="p">)</span>
+    <span class="n">distance_matrix</span> <span class="o">=</span> <span class="n">roi_submesh</span><span class="o">.</span><span class="n">dijkstra</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">source_stim</span> <span class="o">=</span> <span class="n">CFStimulus</span><span class="p">(</span><span class="n">source_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">source_data</span><span class="p">)),</span> <span class="n">distance_matrix</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">CFGaussianModel</span><span class="p">(</span><span class="n">source_stim</span><span class="p">)</span>
+    <span class="n">gf</span> <span class="o">=</span> <span class="n">CFFitter</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">target_data</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="k">del</span> <span class="n">distance_matrix</span>
+
+    <span class="c1"># Grid fit</span>
+    <span class="n">sigmas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="n">gf</span><span class="o">.</span><span class="n">grid_fit</span><span class="p">(</span><span class="n">sigmas</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_batches</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Joint optimization</span>
+    <span class="n">joint_opt</span> <span class="o">=</span> <span class="n">optimize_connfield_joint</span><span class="p">(</span>
+        <span class="n">gf</span><span class="p">,</span>
+        <span class="n">r2_threshold</span><span class="o">=</span><span class="n">r2_threshold</span><span class="p">,</span>
+        <span class="n">sigma_bounds</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">),</span>
+        <span class="n">max_outer_iterations</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+        <span class="n">search_radius</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.001</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Store results</span>
+    <span class="n">run_results</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;run_</span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;centers&#39;</span><span class="p">:</span> <span class="n">joint_opt</span><span class="p">[</span><span class="s1">&#39;vertex_indices&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
+        <span class="s1">&#39;sigma&#39;</span><span class="p">:</span> <span class="n">joint_opt</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;r2&#39;</span><span class="p">:</span> <span class="n">joint_opt</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span>
+    <span class="p">}</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s2"> complete&quot;</span><span class="p">)</span>
+<br/><br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+============================================================
+Processing Run 1
+============================================================
+Run 1 complete
+
+============================================================
+Processing Run 2
+============================================================
+Run 2 complete
+
+============================================================
+Processing Run 3
+============================================================
+Run 3 complete
+
+============================================================
+Processing Run 4
+============================================================
+Run 4 complete
+</pre></div></div>
+</div>
+</section>
+<section id="CF-pRF-map-match">
+<h2><span class="section-number">2.2.16. </span>CF-pRF map match<a class="headerlink" href="#CF-pRF-map-match" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Collect statistics for all runs</span>
+<span class="n">stats_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_corr_ecc</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_corr_pol</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_sigma</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_r2</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">run_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_results</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;run_</span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Get CF results for target ROI</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">target_roi_mask</span>
+    <span class="n">CF_ecc</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+    <span class="n">CF_pol</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+    <span class="n">target_ecc</span> <span class="o">=</span> <span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">target_pol</span> <span class="o">=</span> <span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="c1"># Compute correlations</span>
+    <span class="n">corr_ecc_rho</span><span class="p">,</span> <span class="n">corr_ecc_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">CF_ecc</span><span class="p">,</span> <span class="n">target_ecc</span><span class="p">)</span>
+    <span class="n">corr_pol</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">CF_pol</span><span class="p">,</span> <span class="n">target_pol</span><span class="p">)</span>
+    <span class="n">corr_pol_rho</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">corr_pol_pval</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Get average sigma and mean R²</span>
+    <span class="n">mean_sigma</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">mean_r2</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Store for across-run statistics</span>
+    <span class="n">all_corr_ecc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corr_ecc_rho</span><span class="p">)</span>
+    <span class="n">all_corr_pol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corr_pol_rho</span><span class="p">)</span>
+    <span class="n">all_sigma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_sigma</span><span class="p">)</span>
+    <span class="n">all_r2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_r2</span><span class="p">)</span>
+
+    <span class="n">stats_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Run&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Ecc ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Ecc p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Pol ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Pol p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Mean σ (mm)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_sigma</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Mean R²&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">})</span>
+
+<span class="c1"># Add run average with std</span>
+<span class="n">stats_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;Run&#39;</span><span class="p">:</span> <span class="s1">&#39;Runs Mean (std)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_corr_ecc</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_corr_ecc</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc p&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_corr_pol</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_corr_pol</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol p&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean σ (mm)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_sigma</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_sigma</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean R²&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_r2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_r2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="p">})</span>
+
+<span class="c1"># Add averaged timeseries result (results_B)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">target_roi_mask</span>
+<span class="n">CF_ecc_avg</span> <span class="o">=</span> <span class="n">ecc_pRF</span><span class="p">[</span><span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+<span class="n">CF_pol_avg</span> <span class="o">=</span> <span class="n">pol_pRF</span><span class="p">[</span><span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+
+<span class="c1">#CF_ecc_avg = ecc_atlas[results_B[&#39;centers&#39;].astype(int)]</span>
+<span class="c1">#CF_pol_avg = pol_atlas[results_B[&#39;centers&#39;].astype(int)]</span>
+
+<span class="n">target_ecc_avg</span> <span class="o">=</span> <span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">target_pol_avg</span> <span class="o">=</span> <span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="n">corr_ecc_avg_rho</span><span class="p">,</span> <span class="n">corr_ecc_avg_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">CF_ecc_avg</span><span class="p">,</span> <span class="n">target_ecc_avg</span><span class="p">)</span>
+<span class="n">corr_pol_avg</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">CF_pol_avg</span><span class="p">,</span> <span class="n">target_pol_avg</span><span class="p">)</span>
+<span class="n">corr_pol_avg_rho</span> <span class="o">=</span> <span class="n">corr_pol_avg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">corr_pol_avg_pval</span> <span class="o">=</span> <span class="n">corr_pol_avg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">mean_sigma_avg</span> <span class="o">=</span> <span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_r2_avg</span> <span class="o">=</span> <span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">stats_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;Run&#39;</span><span class="p">:</span> <span class="s1">&#39;Averaged runs&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_avg_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_avg_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_avg_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_avg_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean σ (mm)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_sigma_avg</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean R²&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_r2_avg</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">})</span>
+
+<span class="c1"># Create DataFrame</span>
+<span class="n">df_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">stats_data</span><span class="p">)</span>
+
+<span class="c1"># Print as markdown table</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## CF-derived vs pRF retinotopy&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">df_stats</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># Also save to file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;cf_statistics_summary.md&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;## CF-derived vs pRF retinotopy</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">df_stats</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Table saved to &#39;cf_statistics_summary.md&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+## CF-derived vs pRF retinotopy
+
+| Run             | Ecc ρ         | Ecc p    | Pol ρ         | Pol p     | Mean σ (mm)   | Mean R²         |
+|:----------------|:--------------|:---------|:--------------|:----------|:--------------|:----------------|
+| Run 1           | 0.859         | 0.00e+00 | 0.537         | 2.06e-156 | 1.64          | 0.5003          |
+| Run 2           | 0.802         | 0.00e+00 | 0.464         | 4.51e-117 | 1.49          | 0.4780          |
+| Run 3           | 0.720         | 0.00e+00 | 0.456         | 5.93e-113 | 1.41          | 0.4828          |
+| Run 4           | 0.687         | 0.00e+00 | 0.470         | 3.73e-120 | 1.70          | 0.4983          |
+| Runs Mean (std) | 0.767 (0.067) | -        | 0.482 (0.032) | -         | 1.56 (0.12)   | 0.4898 (0.0096) |
+| Averaged runs   | 0.797         | 0.00e+00 | 0.515         | 1.23e-143 | 1.48          | 0.5766          |
+
+Table saved to &#39;cf_statistics_summary.md&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="CF-match-to-atlas-retinotopy">
+<h2><span class="section-number">2.2.17. </span>CF match to atlas retinotopy<a class="headerlink" href="#CF-match-to-atlas-retinotopy" title="Permalink to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Collect statistics for all runs</span>
+<span class="n">stats_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_corr_ecc</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_corr_pol</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_sigma</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">all_r2</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">run_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">run_results</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;run_</span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Get CF results for target ROI</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">target_roi_mask</span>
+    <span class="n">CF_ecc</span> <span class="o">=</span> <span class="n">ecc_atlas</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+    <span class="n">CF_pol</span> <span class="o">=</span> <span class="n">pol_atlas</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+    <span class="n">target_ecc</span> <span class="o">=</span> <span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">target_pol</span> <span class="o">=</span> <span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="c1"># Compute correlations</span>
+    <span class="n">corr_ecc_rho</span><span class="p">,</span> <span class="n">corr_ecc_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">CF_ecc</span><span class="p">,</span> <span class="n">target_ecc</span><span class="p">)</span>
+    <span class="n">corr_pol</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">CF_pol</span><span class="p">,</span> <span class="n">target_pol</span><span class="p">)</span>
+    <span class="n">corr_pol_rho</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">corr_pol_pval</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Get average sigma and mean R²</span>
+    <span class="n">mean_sigma</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">mean_r2</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Store for across-run statistics</span>
+    <span class="n">all_corr_ecc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corr_ecc_rho</span><span class="p">)</span>
+    <span class="n">all_corr_pol</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">corr_pol_rho</span><span class="p">)</span>
+    <span class="n">all_sigma</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_sigma</span><span class="p">)</span>
+    <span class="n">all_r2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_r2</span><span class="p">)</span>
+
+    <span class="n">stats_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Run&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">run_num</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Ecc ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Ecc p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Pol ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Pol p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Mean σ (mm)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_sigma</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s1">&#39;Mean R²&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">})</span>
+
+<span class="c1"># Add run average with std</span>
+<span class="n">stats_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;Run&#39;</span><span class="p">:</span> <span class="s1">&#39;Runs Mean (std)&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_corr_ecc</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_corr_ecc</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc p&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_corr_pol</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_corr_pol</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol p&#39;</span><span class="p">:</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean σ (mm)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_sigma</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_sigma</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean R²&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">all_r2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">all_r2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span>
+<span class="p">})</span>
+
+<span class="c1"># Add averaged timeseries result (results_B)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">target_roi_mask</span>
+
+
+
+<span class="n">CF_ecc_avg</span> <span class="o">=</span> <span class="n">ecc_atlas</span><span class="p">[</span><span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+<span class="n">CF_pol_avg</span> <span class="o">=</span> <span class="n">pol_atlas</span><span class="p">[</span><span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;centers&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+
+<span class="n">target_ecc_avg</span> <span class="o">=</span> <span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">target_pol_avg</span> <span class="o">=</span> <span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="n">corr_ecc_avg_rho</span><span class="p">,</span> <span class="n">corr_ecc_avg_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">CF_ecc_avg</span><span class="p">,</span> <span class="n">target_ecc_avg</span><span class="p">)</span>
+<span class="n">corr_pol_avg</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">CF_pol_avg</span><span class="p">,</span> <span class="n">target_pol_avg</span><span class="p">)</span>
+<span class="n">corr_pol_avg_rho</span> <span class="o">=</span> <span class="n">corr_pol_avg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">corr_pol_avg_pval</span> <span class="o">=</span> <span class="n">corr_pol_avg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">mean_sigma_avg</span> <span class="o">=</span> <span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">mean_r2_avg</span> <span class="o">=</span> <span class="n">results_B</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">stats_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s1">&#39;Run&#39;</span><span class="p">:</span> <span class="s1">&#39;Averaged runs&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_avg_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Ecc p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_ecc_avg_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol ρ&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_avg_rho</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Pol p&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">corr_pol_avg_pval</span><span class="si">:</span><span class="s2">.2e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean σ (mm)&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_sigma_avg</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;Mean R²&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mean_r2_avg</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">})</span>
+
+<span class="c1"># Create DataFrame</span>
+<span class="n">df_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">stats_data</span><span class="p">)</span>
+
+<span class="c1"># Print as markdown table</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">## CF-derived vs atlas retinotopy&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">df_stats</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="c1"># Also save to file</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;cf_statistics_summary.md&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;## CF-derived vs pRF retinotopy</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">df_stats</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Table saved to &#39;cf_statistics_summary.md&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+## CF-derived vs atlas retinotopy
+
+| Run             | Ecc ρ         | Ecc p     | Pol ρ         | Pol p     | Mean σ (mm)   | Mean R²         |
+|:----------------|:--------------|:----------|:--------------|:----------|:--------------|:----------------|
+| Run 1           | 0.777         | 0.00e+00  | 0.531         | 3.45e-153 | 1.64          | 0.5003          |
+| Run 2           | 0.674         | 0.00e+00  | 0.489         | 8.06e-130 | 1.49          | 0.4780          |
+| Run 3           | 0.594         | 6.24e-237 | 0.491         | 5.52e-131 | 1.41          | 0.4828          |
+| Run 4           | 0.543         | 4.83e-191 | 0.457         | 1.55e-113 | 1.70          | 0.4983          |
+| Runs Mean (std) | 0.647 (0.088) | -         | 0.492 (0.026) | -         | 1.56 (0.12)   | 0.4898 (0.0096) |
+| Averaged runs   | 0.659         | 2.16e-309 | 0.527         | 1.20e-150 | 1.48          | 0.5766          |
+
+Table saved to &#39;cf_statistics_summary.md&#39;
+</pre></div></div>
+</div>
+<section id="Conclusions">
+<h3><span class="section-number">2.2.17.1. </span>Conclusions<a class="headerlink" href="#Conclusions" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Derivative free CF size refinement after <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> grid fit, either using L-BFGS-B or Powell algorithms in <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, comparable to bounded optimization by quadratic approximation (COBYQA), but nos as efficient as (optionally GPU parallelized) gradient descent in <code class="docutils literal notranslate"><span class="pre">tensorFlow</span></code>.</p></li>
+<li><p>Best strategy is to use <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> grid fit, followed by a gradient descent -powered joint optimization of CF size and position (using <code class="docutils literal notranslate"><span class="pre">tensorFlow</span></code>).</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="../connmaps/connmapping.html" title="Previous document"><span class="section-number">2.1. </span><strong>Connective Field (CF) modelling</strong></a>
+        </li>
+        <li>
+          <a href="../modules.html" title="Next document"><span class="section-number">3. </span>cfmap</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      <a href="../_sources/notebooks/CF_modelling.ipynb.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

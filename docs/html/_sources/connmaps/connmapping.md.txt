@@ -1,0 +1,36 @@
+---
+layout: default
+title: "connmaps"
+comments: true
+---
+
+# **Connective Field (CF) modelling**
+
+
+Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in `mrVista` (using Matlab built in lscov) by Haak et al. (2013), which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation presented by Knapen et al. (2016). Using Python sci-kit learn optimization functions (implemented as part of the `prfpy` package), the parameter space this version provides also converges to predefined grid parameters. Third, a more recent Python implementation by So-Hyeon et al. (2024) that implements a parameter refinement space using the Broyden-Fletcher-Goldfarb-Shanno optimization algorithm for gradient descent using sci-py functions. Fourth, another Python implementation that capitalizes on automatic differentiation using `Tensorflow` and CUDA (implemented as part of the `braincoder` package) to achieve highly efficient gradient descent.
+
+### <span style="color:lightblue">Questions? 🦉</span>
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="nicogravel/cfMaps"
+        data-repo-id="R_kgDOQDs4IA"
+        data-category="Benchmarks"
+        data-category-id="DIC_kwDOQDs4IM4CwuKQ"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light_protanopia"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+
+

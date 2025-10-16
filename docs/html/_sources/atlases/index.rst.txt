@@ -1,0 +1,20 @@
+Atlases
+=======
+
+This section describes the cortical atlases used and how to visualize them.
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentation
+
+   atlases
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Notebooks
+
+   ../notebooks/retinotopy_template_iCORTEX
+   ../notebooks/occipital_atlas
+   ../notebooks/surface_viz
+   ../notebooks/probabilistic_atlas
+   ../notebooks/surface_viz_pyCortex

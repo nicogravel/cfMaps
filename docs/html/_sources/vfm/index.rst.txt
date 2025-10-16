@@ -1,0 +1,16 @@
+Visual Field Mapping
+====================
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentation
+
+   retmaps
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Notebooks
+
+   ../notebooks/pRF_modelling
+

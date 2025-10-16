@@ -1,0 +1,49 @@
+---
+layout: default
+title: "atlases"
+comments: true
+---
+
+# **Probabilistic Atlases**
+
+
+|![](/figures/atlases/Benson2014.png){width="1200px" align=center}|
+|:--:|
+|**Benson occipital atlas**. Polar angle derived derived from anatomical landmarks.|
+
+
+
+|![](/figures/atlases/Wang2015.png){width="1200px" align=center}|
+|:--:|
+|**Wang-Kastner probabilistic atlas**. Obersved ffrom inside the brain, the dorsal, ventral and lateral pathways become evident.|
+
+
+
+
+
+### <span style="color:lightblue">Questions? 🦉</span>
+
+
+
+
+<script src="https://giscus.app/client.js"
+        data-repo="unicogr/retMaps"
+        data-repo-id="R_kgDOPoUg_A"
+        data-category="Vers une cartographie rétinotopique des fonctions cognitives."
+        data-category-id="DIC_kwDOPoUg_M4Cu3xV"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="cobalt"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+
+
+
+

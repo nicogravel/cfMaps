@@ -1,0 +1,37 @@
+cfmap package
+=============
+
+Submodules
+----------
+
+cfmap.CF\_mapping module
+------------------------
+
+.. automodule:: cfmap.CF_mapping
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cfmap.color\_palettes module
+----------------------------
+
+.. automodule:: cfmap.color_palettes
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+cfmap.pRF\_processing module
+----------------------------
+
+.. automodule:: cfmap.pRF_processing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: cfmap
+   :members:
+   :undoc-members:
+   :show-inheritance:

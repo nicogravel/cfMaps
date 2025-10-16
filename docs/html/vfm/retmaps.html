@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>1.1. Population Receptive Field (pRF) mapping &#8212; cfMaps  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1.2. pRF fitting procedure using Braincoder" href="../notebooks/pRF_modelling.html" />
+    <link rel="prev" title="1. Visual Field Mapping" href="index.html" />
+    <link href="../_static/style.css" rel="stylesheet" type="text/css">
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Research Log</p>
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">1. Visual Field mapping</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1.1. <strong>Population Receptive Field (pRF) mapping</strong></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/pRF_modelling.html">1.2. pRF fitting procedure using Braincoder</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../connmaps/index.html">2. Connectivity mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">3. Codebook</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html"><span class="section-number">1. </span>Visual Field Mapping</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter"><span class="section-number">1. </span>Visual Field Mapping</a></li>
+      <li>Next: <a href="../notebooks/pRF_modelling.html" title="next chapter"><span class="section-number">1.2. </span>pRF fitting procedure using Braincoder</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document"><span class="section-number">1. </span>Visual Field Mapping</a>
+        </li>
+        <li>
+          <a href="../notebooks/pRF_modelling.html" title="Next document"><span class="section-number">1.2. </span>pRF fitting procedure using Braincoder</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="population-receptive-field-prf-mapping">
+<h1><span class="section-number">1.1. </span><strong>Population Receptive Field (pRF) mapping</strong><a class="headerlink" href="#population-receptive-field-prf-mapping" title="Permalink to this heading">¶</a></h1>
+<p>This pipeline relies on <code class="docutils literal notranslate"><span class="pre">CUDA</span></code>. However, in the abscenece of a correctly installed nvidia card, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> defaults to CPU parallelization. For the initial grid search, <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> also uses CPU parallelization and</p>
+<p>Using NVIDIA GeForce GTX 1080 Ti (CUDA version 13.0 and <code class="docutils literal notranslate"><span class="pre">pyenv</span></code> environment with Python version 3.11.11).</p>
+<details>
+  <summary><span style="color:#3382FF">brainCoder `pyenv` environment requirements</span></summary>   
+<p>aiobotocore==2.24.2<br />
+aiohappyeyeballs==2.6.1<br />
+aiohttp==3.12.15<br />
+aioitertools==0.12.0<br />
+aiosignal==1.4.0<br />
+anyio==4.11.0<br />
+argon2-cffi==25.1.0<br />
+argon2-cffi-bindings==25.1.0<br />
+arrow==1.3.0<br />
+asttokens==3.0.0<br />
+astunparse==1.6.3<br />
+async-lru==2.0.5<br />
+attrs==25.3.0<br />
+babel==2.17.0<br />
+beautifulsoup4==4.13.5<br />
+bleach==6.2.0<br />
+blessed==1.22.0<br />
+botocore==1.40.18<br />
+bqplot==0.12.45<br />
+braincoder &#64; git+https://github.com/Gilles86/braincoder.git&#64;e6567b4e4812fabf6f041df9165d21828dcc7005<br />
+cachetools==5.5.2<br />
+certifi==2025.8.3<br />
+cffi==2.0.0<br />
+charset-normalizer==3.4.3<br />
+cloudpickle==3.1.1<br />
+comm==0.2.3<br />
+contourpy==1.3.3<br />
+cuda-bindings==13.0.1<br />
+cuda-pathfinder==1.2.3<br />
+cuda-python==13.0.1<br />
+cycler==0.12.1<br />
+debugpy==1.8.17<br />
+decorator==5.2.1<br />
+defusedxml==0.7.1<br />
+dm-tree==0.1.9<br />
+executing==2.2.1<br />
+fastjsonschema==2.21.2<br />
+flatbuffers==25.9.23<br />
+flexcache==0.3<br />
+flexparser==0.4<br />
+fonttools==4.60.0<br />
+fqdn==1.5.1<br />
+frozenlist==1.7.0<br />
+fsspec==2025.9.0<br />
+gast==0.6.0<br />
+google-auth==2.40.3<br />
+google-auth-oauthlib==1.2.2<br />
+google-pasta==0.2.0<br />
+gpustat==1.1.1<br />
+grpcio==1.75.1<br />
+h11==0.16.0<br />
+h5py==3.14.0<br />
+httpcore==1.0.9<br />
+httpx==0.28.1<br />
+idna==3.10<br />
+importlib_resources==6.5.2<br />
+ipydatawidgets==4.3.5<br />
+ipykernel==6.30.1<br />
+ipython==9.5.0<br />
+ipython-genutils==0.2.0<br />
+ipython_pygments_lexers==1.1.1<br />
+ipyvolume==0.6.3<br />
+ipyvue==1.11.3<br />
+ipyvuetify==1.11.3<br />
+ipywebrtc==0.6.0<br />
+ipywidgets==8.1.7<br />
+isoduration==20.11.0<br />
+jedi==0.19.2<br />
+Jinja2==3.1.6<br />
+jmespath==1.0.1<br />
+joblib==1.5.2<br />
+json5==0.12.1<br />
+jsonpointer==3.0.0<br />
+jsonschema==4.25.1<br />
+jsonschema-specifications==2025.9.1<br />
+jupyter-events==0.12.0<br />
+jupyter-lsp==2.3.0<br />
+jupyter_client==8.6.3<br />
+jupyter_core==5.8.1<br />
+jupyter_server==2.17.0<br />
+jupyter_server_terminals==0.5.3<br />
+jupyterlab==4.4.8<br />
+jupyterlab_pygments==0.3.0<br />
+jupyterlab_server==2.27.3<br />
+jupyterlab_widgets==3.0.15<br />
+keras==2.15.0<br />
+kiwisolver==1.4.9<br />
+lark==1.3.0<br />
+libclang==18.1.1<br />
+llvmlite==0.41.1<br />
+Markdown==3.9<br />
+markdown-it-py==4.0.0<br />
+MarkupSafe==3.0.2<br />
+matplotlib==3.10.6<br />
+matplotlib-inline==0.1.7<br />
+mdurl==0.1.2<br />
+mistune==3.1.4<br />
+ml-dtypes==0.2.0<br />
+multidict==6.6.4<br />
+namex==0.1.0<br />
+nbclient==0.10.2<br />
+nbconvert==7.16.6<br />
+nbformat==5.10.4<br />
+nest-asyncio==1.6.0<br />
+neuropythy &#64; git+https://github.com/noahbenson/neuropythy.git&#64;44400c69434cc946feb0d789f7488b36deb3660e<br />
+nibabel==5.3.2<br />
+notebook==7.4.6<br />
+notebook_shim==0.2.4<br />
+numba==0.58.1<br />
+numpy==1.26.4<br />
+nvidia-cublas-cu12==12.9.1.4<br />
+nvidia-cuda-cupti-cu12==12.9.79<br />
+nvidia-cuda-nvcc-cu12==12.9.86<br />
+nvidia-cuda-nvrtc-cu12==12.9.86<br />
+nvidia-cuda-runtime-cu12==12.9.79<br />
+nvidia-cudnn-cu12==9.13.0.50<br />
+nvidia-cufft-cu12==11.4.1.4<br />
+nvidia-curand-cu12==10.3.10.19<br />
+nvidia-cusolver-cu12==11.7.5.82<br />
+nvidia-cusparse-cu12==12.5.10.65<br />
+nvidia-ml-py==13.580.82<br />
+nvidia-nccl-cu12==2.28.3<br />
+nvidia-nvjitlink-cu12==12.9.86<br />
+oauthlib==3.3.1<br />
+opt_einsum==3.4.0<br />
+optree==0.17.0<br />
+overrides==7.7.0<br />
+packaging==25.0<br />
+pandas==2.3.2<br />
+pandas_flavor==0.7.0<br />
+pandocfilters==1.5.1<br />
+parso==0.8.5<br />
+patsy==1.0.1<br />
+pexpect==4.9.0<br />
+pillow==11.3.0<br />
+pimms==0.3.25<br />
+pingouin==0.5.5<br />
+Pint==0.25<br />
+platformdirs==4.4.0<br />
+prometheus_client==0.23.1<br />
+prompt_toolkit==3.0.52<br />
+propcache==0.3.2<br />
+protobuf==4.25.8<br />
+psutil==7.1.0<br />
+ptyprocess==0.7.0<br />
+pure_eval==0.2.3<br />
+py4j==0.10.9.9<br />
+pyasn1==0.6.1<br />
+pyasn1_modules==0.4.2<br />
+pycparser==2.23<br />
+Pygments==2.19.2<br />
+pyparsing==3.2.5<br />
+pyrsistent==0.20.0<br />
+python-dateutil==2.9.0.post0<br />
+python-json-logger==3.3.0<br />
+pythreejs==2.4.2<br />
+pytz==2025.2<br />
+PyYAML==6.0.3<br />
+pyzmq==27.1.0<br />
+referencing==0.36.2<br />
+requests==2.32.5<br />
+requests-oauthlib==2.0.0<br />
+rfc3339-validator==0.1.4<br />
+rfc3986-validator==0.1.1<br />
+rfc3987-syntax==1.1.0<br />
+rich==14.1.0<br />
+rpds-py==0.27.1<br />
+rsa==4.9.1<br />
+s3fs==2025.9.0<br />
+scikit-learn==1.7.2<br />
+scipy==1.16.2<br />
+seaborn==0.13.2<br />
+Send2Trash==1.8.3<br />
+six==1.17.0<br />
+sniffio==1.3.1<br />
+soupsieve==2.8<br />
+stack-data==0.6.3<br />
+statsmodels==0.14.5<br />
+tabulate==0.9.0<br />
+tensorboard==2.15.2<br />
+tensorboard-data-server==0.7.2<br />
+tensorflow==2.15.0<br />
+tensorflow-estimator==2.15.0<br />
+tensorflow-io-gcs-filesystem==0.37.1<br />
+tensorflow-probability==0.23.0<br />
+termcolor==3.1.0<br />
+terminado==0.18.1<br />
+tf-keras==2.15.0<br />
+threadpoolctl==3.6.0<br />
+tinycss2==1.4.0<br />
+tornado==6.5.2<br />
+tqdm==4.67.1<br />
+traitlets==5.14.3<br />
+traittypes==0.2.1<br />
+types-python-dateutil==2.9.0.20250822<br />
+typing_extensions==4.15.0<br />
+tzdata==2025.2<br />
+uri-template==1.3.0<br />
+urllib3==2.5.0<br />
+wcwidth==0.2.14<br />
+webcolors==24.11.1<br />
+webencodings==0.5.1<br />
+websocket-client==1.8.0<br />
+Werkzeug==3.1.3<br />
+widgetsnbextension==4.0.14<br />
+wrapt==1.14.2<br />
+xarray==2025.9.0<br />
+yarl==1.20.1</p>
+</details>
+<section id="questions">
+<h2><span class="section-number">1.1.1. </span><span style="color:lightblue">Questions? 🦉</span><a class="headerlink" href="#questions" title="Permalink to this heading">¶</a></h2>
+<script src="https://giscus.app/client.js"
+        data-repo="nicogravel/cfMaps"
+        data-repo-id="R_kgDOQDs4IA"
+        data-category="Benchmarks"
+        data-category-id="DIC_kwDOQDs4IM4CwuKQ"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light_protanopia"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</section>
+</section>
+
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document"><span class="section-number">1. </span>Visual Field Mapping</a>
+        </li>
+        <li>
+          <a href="../notebooks/pRF_modelling.html" title="Next document"><span class="section-number">1.2. </span>pRF fitting procedure using Braincoder</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;.
+      
+      |
+      <a href="../_sources/vfm/retmaps.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

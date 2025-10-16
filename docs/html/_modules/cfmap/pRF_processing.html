@@ -1,0 +1,488 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cfmap.pRF_processing &#8212; cfMaps  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link href="../../_static/style.css" rel="stylesheet" type="text/css">
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Research Log</p>
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../vfm/index.html">1. Visual Field mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connmaps/index.html">2. Connectivity mapping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">3. Codebook</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for cfmap.pRF_processing</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">neuropythy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ny</span>  
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.inset_locator</span><span class="w"> </span><span class="kn">import</span> <span class="n">inset_axes</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wedge</span>
+
+<div class="viewcode-block" id="plot_prf_maps"><a class="viewcode-back" href="../../cfmap.html#cfmap.pRF_processing.plot_prf_maps">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_prf_maps</span><span class="p">(</span><span class="n">prf_results</span><span class="p">,</span> <span class="n">flatmaps</span><span class="p">,</span> <span class="n">colors_ecc</span><span class="p">,</span> <span class="n">colors_polar</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">max_sigma</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">r2_threshold</span><span class="o">=</span><span class="mf">0.15</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots pRF parameter maps (eccentricity, polar angle, sigma, and R²) on a cortical flatmap.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    prf_results : pd.DataFrame</span>
+<span class="sd">        DataFrame containing pRF parameters with columns &#39;x&#39;, &#39;y&#39;, &#39;sd&#39;, &#39;r2&#39;.</span>
+<span class="sd">    flatmaps : dict</span>
+<span class="sd">        Dictionary of flatmaps for hemispheres, e.g., flatmaps[h].</span>
+<span class="sd">    colors_ecc : dict</span>
+<span class="sd">        Color palette for eccentricity with &#39;matplotlib_cmap&#39; and &#39;hex&#39; keys.</span>
+<span class="sd">    colors_polar : dict</span>
+<span class="sd">        Color palette for polar angle with &#39;matplotlib_cmap&#39; and &#39;hex&#39; keys.</span>
+<span class="sd">    h : str</span>
+<span class="sd">        Hemisphere identifier, e.g., &#39;lh&#39; or &#39;rh&#39;.</span>
+<span class="sd">    max_sigma : float, optional</span>
+<span class="sd">        Maximum sigma value for colorbar scaling (default: 3).</span>
+<span class="sd">    r2_threshold : float, optional</span>
+<span class="sd">        R² threshold for alpha scaling (default: 0.15).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fig : matplotlib.figure.Figure</span>
+<span class="sd">        The created figure object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Calculate derived measures from x and y coordinates</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># Flip y coordinates as in original code</span>
+    <span class="n">ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Eccentricity</span>
+    <span class="n">polar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># Polar angle</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># pRF size</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">prf_results</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># Variance explained</span>
+
+    <span class="c1"># Create alpha based on R²</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">r2</span> <span class="o">/</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Scale alpha by R², capped at 0.5 R² for max visibility</span>
+
+    <span class="c1"># Create the maps</span>
+    <span class="n">ecc_map</span> <span class="o">=</span> <span class="n">ecc</span>
+    <span class="n">polar_map</span> <span class="o">=</span> <span class="n">polar</span>
+    <span class="n">sigma_map</span> <span class="o">=</span> <span class="n">sigma</span>
+    <span class="n">r2_map</span> <span class="o">=</span> <span class="n">r2</span>
+
+    <span class="c1"># Create the figure</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">left_ax</span><span class="p">,</span> <span class="n">left_middle_ax</span><span class="p">,</span> <span class="n">right_middle_ax</span><span class="p">,</span> <span class="n">right_ax</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">72</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="c1"># Eccentricity plot</span>
+    <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+        <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">left_ax</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">ecc_map</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s1">&#39;matplotlib_cmap&#39;</span><span class="p">],</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">),</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Polar angle plot</span>
+    <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+        <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">left_middle_ax</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">polar_map</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">[</span><span class="s1">&#39;matplotlib_cmap&#39;</span><span class="p">],</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Sigma (pRF size) plot</span>
+    <span class="n">size_vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">)</span>
+    <span class="n">size_vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sigma range: </span><span class="si">{</span><span class="n">size_vmin</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">size_vmax</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">size_cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span>
+    <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+        <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">right_middle_ax</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">sigma_map</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">size_cmap</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">),</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="n">max_sigma</span><span class="p">,</span>
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Variance explained plot</span>
+    <span class="n">varex_cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">inferno</span>
+    <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+        <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">right_ax</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">r2_map</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">varex_cmap</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Add legends/inserts</span>
+
+    <span class="c1"># Eccentricity inset</span>
+    <span class="n">ecc_inset</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+        <span class="n">left_ax</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+        <span class="n">borderpad</span><span class="o">=-</span><span class="mi">6</span>
+    <span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mathit</span><span class="si">{r}</span><span class="s1">\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ecc_inset</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+    <span class="c1"># Add concentric rings for eccentricity</span>
+    <span class="n">num_ecc_colors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">]):</span>
+        <span class="n">inner_r</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">num_ecc_colors</span>
+        <span class="n">outer_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_ecc_colors</span>
+        <span class="n">ring</span> <span class="o">=</span> <span class="n">Wedge</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">outer_r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span>
+                     <span class="n">width</span><span class="o">=</span><span class="n">outer_r</span> <span class="o">-</span> <span class="n">inner_r</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">ecc_inset</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ring</span><span class="p">)</span>
+
+    <span class="c1"># Polar angle inset</span>
+    <span class="n">polar_inset</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+        <span class="n">left_middle_ax</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+        <span class="n">borderpad</span><span class="o">=-</span><span class="mi">6</span>
+    <span class="p">)</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">colors_polar</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">]),</span>
+        <span class="n">colors</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">],</span>
+        <span class="n">startangle</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+        <span class="n">counterclock</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\theta\ (\mathit</span><span class="si">{rad}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">polar_inset</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+    <span class="c1"># Sigma colorbar</span>
+    <span class="n">sigma_rect_ax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+        <span class="n">right_middle_ax</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30%&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="s2">&quot;10%&quot;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span> 
+        <span class="n">borderpad</span><span class="o">=-</span><span class="mi">3</span>
+    <span class="p">)</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">gradient</span><span class="p">,</span> <span class="n">gradient</span><span class="p">))</span>
+    <span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">size_cmap</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">max_sigma</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\sigma\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+    <span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Variance explained colorbar</span>
+    <span class="n">varex_rect_ax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+        <span class="n">right_ax</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30%&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="s2">&quot;10%&quot;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>          
+        <span class="n">borderpad</span><span class="o">=-</span><span class="mi">3</span>
+    <span class="p">)</span>
+    <span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">varex_cmap</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mathit</span><span class="si">{r}</span><span class="s1">\!</span><span class="si">{}</span><span class="s1">^2$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+    <span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Clean up axes</span>
+    <span class="n">left_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">left_middle_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">right_middle_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">right_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="plot_prf_histograms"><a class="viewcode-back" href="../../cfmap.html#cfmap.pRF_processing.plot_prf_histograms">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_prf_histograms</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">total_rsq</span><span class="p">,</span> <span class="n">r2_threshold</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ylims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">200</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot histograms of pRF parameters.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : array_like</span>
+<span class="sd">        X coordinates of pRF centers.</span>
+<span class="sd">    y : array_like</span>
+<span class="sd">        Y coordinates of pRF centers.</span>
+<span class="sd">    sigma : array_like</span>
+<span class="sd">        pRF size values.</span>
+<span class="sd">    total_rsq : array_like</span>
+<span class="sd">        R² values.</span>
+<span class="sd">    r2_threshold : float, optional</span>
+<span class="sd">        Minimum R² to include (default: 0.0).</span>
+<span class="sd">    ylims : list of tuples, optional</span>
+<span class="sd">        List of 4 tuples for y-axis limits [(y0_min, y0_max), (y1_min, y1_max), ...].</span>
+<span class="sd">    xlims : list of tuples, optional</span>
+<span class="sd">        List of 4 tuples for x-axis limits [(x0_min, x0_max), (x1_min, x1_max), ...].</span>
+<span class="sd">    bins : int or list, optional</span>
+<span class="sd">        Number of bins or list of 4 bin specifications (default: 200).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fig : matplotlib.figure.Figure</span>
+<span class="sd">        The created figure object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Calculate eccentricity and polar angle</span>
+    <span class="n">ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">polar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="c1"># Create mask for significant voxels</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">total_rsq</span> <span class="o">&gt;</span> <span class="n">r2_threshold</span>
+    
+    <span class="c1"># Handle bins parameter - can be single value or list of 4</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bins</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+        <span class="n">bins_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">bins</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">bins_list</span> <span class="o">=</span> <span class="n">bins</span>
+    
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="n">ecc</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$\mathit</span><span class="si">{r}</span><span class="s1">\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">ylims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ylims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">xlims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">xlims</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+         <span class="n">bins_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+        <span class="p">(</span><span class="n">polar</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$\theta\ (\mathit</span><span class="si">{rad}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">ylims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ylims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">xlims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">xlims</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+         <span class="n">bins_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+        <span class="p">(</span><span class="n">sigma</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$\sigma\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">ylims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ylims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">xlims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">xlims</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+         <span class="n">bins_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+        <span class="p">(</span><span class="n">total_rsq</span><span class="p">[</span><span class="n">mask</span><span class="p">],</span> <span class="sa">r</span><span class="s1">&#39;$r^2$&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span> 
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">ylims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ylims</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+         <span class="kc">None</span> <span class="k">if</span> <span class="n">xlims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">xlims</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span>
+         <span class="n">bins_list</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+    <span class="p">]</span>
+    
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+        
+        <span class="c1"># Set x-axis limits</span>
+        <span class="k">if</span> <span class="n">xlim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        
+        <span class="c1"># Set y-axis limits</span>
+        <span class="k">if</span> <span class="n">ylim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+        
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">xlabel</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    
+    <span class="c1"># Add text showing the number of vertices</span>
+    <span class="n">total_vertices</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">total_rsq</span><span class="p">)</span>
+    <span class="n">significant_vertices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> 
+             <span class="sa">f</span><span class="s1">&#39;Total vertices: </span><span class="si">{</span><span class="n">total_vertices</span><span class="si">}</span><span class="se">\n</span><span class="s1">Significant (R²&gt;</span><span class="si">{</span><span class="n">r2_threshold</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">): </span><span class="si">{</span><span class="n">significant_vertices</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">significant_vertices</span><span class="o">/</span><span class="n">total_vertices</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">%)&#39;</span><span class="p">,</span> 
+             <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="plot_roi_retMap"><a class="viewcode-back" href="../../cfmap.html#cfmap.pRF_processing.plot_roi_retMap">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">plot_roi_retMap</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">,</span> <span class="n">pol_map</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">titles</span><span class="p">,</span> <span class="n">flatmaps</span><span class="p">,</span> <span class="n">colors_ecc</span><span class="p">,</span> <span class="n">colors_polar</span><span class="p">,</span> <span class="n">h</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots eccentricity and polar angle maps on a cortical flatmap.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ecc_map : array_like</span>
+<span class="sd">        Eccentricity values for each vertex.</span>
+<span class="sd">    pol_map : array_like</span>
+<span class="sd">        Polar angle values for each vertex.</span>
+<span class="sd">    mask : array_like</span>
+<span class="sd">        Boolean mask to apply to the plots.</span>
+<span class="sd">    titles : list of str</span>
+<span class="sd">        List containing two title strings for eccentricity and polar angle plots.</span>
+<span class="sd">    flatmaps : dict</span>
+<span class="sd">        Dictionary of flatmaps for hemispheres.</span>
+<span class="sd">    colors_ecc : dict</span>
+<span class="sd">        Color palette for eccentricity.</span>
+<span class="sd">    colors_polar : dict</span>
+<span class="sd">        Color palette for polar angle.</span>
+<span class="sd">    h : str</span>
+<span class="sd">        Hemisphere identifier (e.g., &#39;lh&#39; or &#39;rh&#39;).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create figure with two subplots</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_ecc</span><span class="p">,</span> <span class="n">ax_polar</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+    <span class="c1"># Eccentricity plot</span>
+    <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+        <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">ax_ecc</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">ecc_map</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s1">&#39;matplotlib_cmap&#39;</span><span class="p">],</span>
+        <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
+        <span class="n">vmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">[</span><span class="n">mask</span><span class="p">]),</span>
+        <span class="n">vmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Polar angle plot</span>
+    <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
+        <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
+        <span class="n">axes</span><span class="o">=</span><span class="n">ax_polar</span><span class="p">,</span>
+        <span class="n">color</span><span class="o">=</span><span class="n">pol_map</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">[</span><span class="s1">&#39;matplotlib_cmap&#39;</span><span class="p">],</span>
+        <span class="n">mask</span><span class="o">=</span><span class="n">mask</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Set aspect ratio and titles</span>
+    <span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax_polar</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">ax_polar</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="c1"># Eccentricity inset (concentric rings)</span>
+    <span class="n">ecc_inset</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+        <span class="n">ax_ecc</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+        <span class="n">borderpad</span><span class="o">=-</span><span class="mi">6</span>
+    <span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\rho\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ecc_inset</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+    <span class="c1"># Create concentric rings for eccentricity</span>
+    <span class="n">num_ecc_colors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">]):</span>
+        <span class="n">inner_r</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">num_ecc_colors</span>
+        <span class="n">outer_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_ecc_colors</span>
+        <span class="n">ring</span> <span class="o">=</span> <span class="n">Wedge</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">outer_r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span>
+                     <span class="n">width</span><span class="o">=</span><span class="n">outer_r</span> <span class="o">-</span> <span class="n">inner_r</span><span class="p">,</span>
+                     <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">ecc_inset</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ring</span><span class="p">)</span>
+
+    <span class="c1"># Polar angle inset (pie)</span>
+    <span class="n">polar_inset</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
+        <span class="n">ax_polar</span><span class="p">,</span>
+        <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">,</span>
+        <span class="n">height</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">,</span>
+        <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
+        <span class="n">borderpad</span><span class="o">=-</span><span class="mi">6</span>
+    <span class="p">)</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">colors_polar</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">]),</span>
+        <span class="n">colors</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">],</span>
+        <span class="n">startangle</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+        <span class="n">counterclock</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+    <span class="n">polar_inset</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\theta\ (\mathit</span><span class="si">{rad}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">polar_inset</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+    <span class="c1"># Turn off axes</span>
+    <span class="n">ax_ecc</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">ax_polar</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;.
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

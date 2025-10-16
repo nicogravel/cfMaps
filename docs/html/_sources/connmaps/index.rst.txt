@@ -1,0 +1,15 @@
+Connective Field Modelling
+===========================
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Documentation
+
+   connmapping
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Notebooks
+
+   ../notebooks/CF_modelling
