@@ -17,20 +17,20 @@ comments: true
 
 
 
-## <span style="color:lightblue">Suggestions 📖</span>
+### Suggestions 📖
 
 
 <script src="https://giscus.app/client.js"
-        data-repo="nicogravel/researchLog_template"
-        data-repo-id="R_kgDON90EnA"
-        data-category="Giscus!"
-        data-category-id="DIC_kwDON90EnM4CnVS9"
+        data-repo="nicogravel/cfMaps"
+        data-repo-id="R_kgDOQDs4IA"
+        data-category="Benchmarks"
+        data-category-id="DIC_kwDOQDs4IM4CwuKQ"
         data-mapping="pathname"
         data-strict="0"
         data-reactions-enabled="1"
         data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="gruvbox"
+        data-input-position="top"
+        data-theme="light_protanopia"
         data-lang="en"
         data-loading="lazy"
         crossorigin="anonymous"

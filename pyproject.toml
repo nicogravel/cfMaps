@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cfmap"
+version = "0.0.0"  # You can specify the version here
+description = "Advanced retinotopic mapping tools for sighted and visually impaired individuals"
+readme = "README.md"
+requires-python = ">=3.8"
+
+
+[tool.setuptools.packages.find]
+where = ["."]

@@ -7,10 +7,9 @@ comments: true
 # **Population Receptive Field (pRF) mapping**
 
 
-This pipeline relies on `CUDA`. However, in the abscenece of a correctly installed nvidia card, `tensorflow` defaults to CPU parallelization. For the initial grid search, `prfpy` also uses CPU parallelization and 
+This pipeline relies on `CUDA` (with `tensorflow`and `cuda` v.12.8 in an NVIDIA RTX 1000 Ada GPU). However, in the abscenece of a correctly installed nvidia card, `tensorflow` defaults to CPU parallelization. For the initial grid search, `prfpy` also uses CPU parallelization and is threrefore quite fast. 
 
 
-Using NVIDIA GeForce GTX 1080 Ti (CUDA version 13.0 and `pyenv` environment with Python version 3.11.11).  
 <details>
   <summary><span style="color:#3382FF">brainCoder `pyenv` environment requirements</span></summary>   
 
@@ -232,7 +231,7 @@ yarl==1.20.1
 
 
 
-### <span style="color:lightblue">Questions? 🦉</span>
+### Questions? 🦉
 
 
 

@@ -1,8 +1,6 @@
 cfmap package
 =============
 
-Submodules
-----------
 
 cfmap.CF\_mapping module
 ------------------------
@@ -28,10 +26,3 @@ cfmap.pRF\_processing module
    :undoc-members:
    :show-inheritance:
 
-Module contents
----------------
-
-.. automodule:: cfmap
-   :members:
-   :undoc-members:
-   :show-inheritance:

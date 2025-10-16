@@ -53,7 +53,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../connmaps/index.html">2. Connectivity mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">3. Codebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">3. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">4. Codebook</a></li>
 </ul>
 
 <div class="relations">
@@ -110,8 +111,7 @@
             
   <section class="tex2jax_ignore mathjax_ignore" id="population-receptive-field-prf-mapping">
 <h1><span class="section-number">1.1. </span><strong>Population Receptive Field (pRF) mapping</strong><a class="headerlink" href="#population-receptive-field-prf-mapping" title="Permalink to this heading">¶</a></h1>
-<p>This pipeline relies on <code class="docutils literal notranslate"><span class="pre">CUDA</span></code>. However, in the abscenece of a correctly installed nvidia card, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> defaults to CPU parallelization. For the initial grid search, <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> also uses CPU parallelization and</p>
-<p>Using NVIDIA GeForce GTX 1080 Ti (CUDA version 13.0 and <code class="docutils literal notranslate"><span class="pre">pyenv</span></code> environment with Python version 3.11.11).</p>
+<p>This pipeline relies on <code class="docutils literal notranslate"><span class="pre">CUDA</span></code> (with <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>and <code class="docutils literal notranslate"><span class="pre">cuda</span></code> v.12.8 in an NVIDIA RTX 1000 Ada GPU). However, in the abscenece of a correctly installed nvidia card, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> defaults to CPU parallelization. For the initial grid search, <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> also uses CPU parallelization and is threrefore quite fast.</p>
 <details>
   <summary><span style="color:#3382FF">brainCoder `pyenv` environment requirements</span></summary>   
 <p>aiobotocore==2.24.2<br />
@@ -324,7 +324,7 @@ xarray==2025.9.0<br />
 yarl==1.20.1</p>
 </details>
 <section id="questions">
-<h2><span class="section-number">1.1.1. </span><span style="color:lightblue">Questions? 🦉</span><a class="headerlink" href="#questions" title="Permalink to this heading">¶</a></h2>
+<h2><span class="section-number">1.1.1. </span>Questions? 🦉<a class="headerlink" href="#questions" title="Permalink to this heading">¶</a></h2>
 <script src="https://giscus.app/client.js"
         data-repo="nicogravel/cfMaps"
         data-repo-id="R_kgDOQDs4IA"

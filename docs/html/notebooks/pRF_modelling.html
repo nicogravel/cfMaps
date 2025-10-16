@@ -56,7 +56,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../connmaps/index.html">2. Connectivity mapping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">3. Codebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">3. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">4. Codebook</a></li>
 </ul>
 
 <div class="relations">
@@ -117,8 +118,8 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reinstall latest updates and restart kernel</span>
-<span class="o">!</span><span class="nb">cd</span><span class="w"> </span>/home/nicolas-gravel/Documents/GitHubProjects/cfMaps/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Reinstall latest updates and restart kernel
+!cd /home/nicolas-gravel/Documents/GitHubProjects/cfMaps/ &amp;&amp; pip install -e .
 </pre></div>
 </div>
 </div>
@@ -145,157 +146,157 @@ Successfully installed cfmap-0.0.0
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define subjects to process</span>
-<span class="c1">#subject_ids = [&#39;02&#39;, &#39;03&#39;, &#39;05&#39;]</span>
-<span class="n">subject_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;02&#39;</span><span class="p">]</span>
-<span class="n">session_id</span> <span class="o">=</span> <span class="s1">&#39;ses-01&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define subjects to process
+#subject_ids = [&#39;02&#39;, &#39;03&#39;, &#39;05&#39;]
+subject_ids = [&#39;02&#39;]
+session_id = &#39;ses-01&#39;
 
-<span class="c1"># Data source configuration</span>
-<span class="n">data_source</span> <span class="o">=</span> <span class="s1">&#39;remote&#39;</span>  <span class="c1"># Change this to &#39;local&#39; or &#39;remote&#39;</span>
+# Data source configuration
+data_source = &#39;remote&#39;  # Change this to &#39;local&#39; or &#39;remote&#39;
 
-<span class="n">projType</span> <span class="o">=</span> <span class="s1">&#39;surf-projected_projfrac&#39;</span>
-<span class="c1">#projType = &#39;surf-projected_projdist-avg&#39;</span>
+projType = &#39;surf-projected_projfrac&#39;
+#projType = &#39;surf-projected_projdist-avg&#39;
 
-<span class="c1"># Define paths based on data source</span>
-<span class="k">if</span> <span class="n">data_source</span> <span class="o">==</span> <span class="s1">&#39;local&#39;</span><span class="p">:</span>
-    <span class="n">base_data_path</span> <span class="o">=</span> <span class="s1">&#39;/media/user/External/XY/&#39;</span>
-    <span class="n">pRF_images_path</span> <span class="o">=</span> <span class="s1">&#39;/home/user/Documents/data/XY/pRF_images/&#39;</span>
-<span class="k">elif</span> <span class="n">data_source</span> <span class="o">==</span> <span class="s1">&#39;remote&#39;</span><span class="p">:</span>
-    <span class="n">base_data_path</span> <span class="o">=</span> <span class="s1">&#39;/media/user/Crucial/XY/&#39;</span>
-    <span class="n">pRF_images_path</span> <span class="o">=</span> <span class="s1">&#39;/media/user/Crucial/XY/pRF_images&#39;</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;data_source must be either &#39;local&#39; or &#39;remote&#39;&quot;</span><span class="p">)</span>
-
-
-
-<span class="c1"># for fMRI data manipulation and basic data handling</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">stats</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">nibabel</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nib</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">neuropythy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ny</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">ipyvolume</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ipv</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-
-<span class="c1"># for pRF modeling</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">numba</span><span class="w"> </span><span class="kn">import</span> <span class="n">cuda</span>
-<span class="n">device</span> <span class="o">=</span> <span class="n">cuda</span><span class="o">.</span><span class="n">get_current_device</span><span class="p">()</span>
-<span class="n">device</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
-
-<span class="c1"># Set this flag to False to use CPU instead of GPU</span>
-<span class="n">USE_GPU</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="k">if</span> <span class="ow">not</span> <span class="n">USE_GPU</span><span class="p">:</span>
-    <span class="c1"># Force TensorFlow to use CPU</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;-1&#39;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running on CPU&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># Configure GPU memory growth to avoid memory issues</span>
-    <span class="n">gpus</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">list_physical_devices</span><span class="p">(</span><span class="s1">&#39;GPU&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">gpus</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">gpu</span> <span class="ow">in</span> <span class="n">gpus</span><span class="p">:</span>
-                <span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">set_memory_growth</span><span class="p">(</span><span class="n">gpu</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="c1"># Use async memory allocator for better memory management</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_GPU_ALLOCATOR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cuda_malloc_async&quot;</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running on GPU: </span><span class="si">{</span><span class="n">gpus</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">RuntimeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GPU configuration error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No GPU devices found, falling back to CPU&quot;</span><span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;CUDA_VISIBLE_DEVICES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;-1&#39;</span>
-
-<span class="c1"># Verify current device being used</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;TensorFlow is using: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get_visible_devices</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Built with CUDA: </span><span class="si">{</span><span class="n">tf</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">is_built_with_cuda</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+# Define paths based on data source
+if data_source == &#39;local&#39;:
+    base_data_path = &#39;/media/user/External/XY/&#39;
+    pRF_images_path = &#39;/home/user/Documents/data/XY/pRF_images/&#39;
+elif data_source == &#39;remote&#39;:
+    base_data_path = &#39;/media/user/Crucial/XY/&#39;
+    pRF_images_path = &#39;/media/user/Crucial/XY/pRF_images&#39;
+else:
+    raise ValueError(&quot;data_source must be either &#39;local&#39; or &#39;remote&#39;&quot;)
 
 
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">braincoder.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianPRF2DWithHRF</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">braincoder.hrf</span><span class="w"> </span><span class="kn">import</span> <span class="n">SPMHRFModel</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">braincoder.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParameterFitter</span>
-
-<span class="c1">## For pRF map plotting</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.axes_grid1.inset_locator</span><span class="w"> </span><span class="kn">import</span> <span class="n">inset_axes</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Wedge</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib.patches</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rectangle</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">mcolors</span>
-
-<span class="c1"># Retmaps code</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cfmap.color_palettes</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_color_palettes</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">cfmap.pRF_processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_prf_histograms</span><span class="p">,</span> <span class="n">plot_roi_retMap</span>
-
-
-<span class="c1"># Load color palettes</span>
-<span class="n">color_palettes</span> <span class="o">=</span> <span class="n">get_color_palettes</span><span class="p">()</span>
-<span class="n">color_palettes</span> <span class="o">=</span> <span class="n">get_color_palettes</span><span class="p">()</span>
-<span class="n">colors_ecc</span> <span class="o">=</span> <span class="n">color_palettes</span><span class="p">[</span><span class="s2">&quot;eccentricity&quot;</span><span class="p">]</span>
-<span class="n">colors_polar</span> <span class="o">=</span> <span class="n">color_palettes</span><span class="p">[</span><span class="s2">&quot;polar&quot;</span><span class="p">]</span>
+# for fMRI data manipulation and basic data handling
+import os
+import sys
+import glob
+import math
+import numpy as np
+import scipy.stats as stats
+import pandas as pd
+import nibabel as nib
+import neuropythy as ny
+import ipyvolume as ipv
+from PIL import Image
+import matplotlib.pyplot as plt
 
 
-<span class="c1"># Create save path</span>
-<span class="n">base_save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="s1">&#39;pRF_results&#39;</span><span class="p">,</span> <span class="n">projType</span><span class="p">)</span>
-<span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_save_path</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+# for pRF modeling
+from numba import cuda
+device = cuda.get_current_device()
+device.reset()
+
+import os
+import tensorflow as tf
+
+# Set this flag to False to use CPU instead of GPU
+USE_GPU = True
+
+if not USE_GPU:
+    # Force TensorFlow to use CPU
+    os.environ[&#39;CUDA_VISIBLE_DEVICES&#39;] = &#39;-1&#39;
+    print(&quot;Running on CPU&quot;)
+else:
+    # Configure GPU memory growth to avoid memory issues
+    gpus = tf.config.list_physical_devices(&#39;GPU&#39;)
+    if gpus:
+        try:
+            for gpu in gpus:
+                tf.config.experimental.set_memory_growth(gpu, True)
+            # Use async memory allocator for better memory management
+            os.environ[&quot;TF_GPU_ALLOCATOR&quot;] = &quot;cuda_malloc_async&quot;
+            print(f&quot;Running on GPU: {gpus}&quot;)
+        except RuntimeError as e:
+            print(f&quot;GPU configuration error: {e}&quot;)
+    else:
+        print(&quot;No GPU devices found, falling back to CPU&quot;)
+        os.environ[&#39;CUDA_VISIBLE_DEVICES&#39;] = &#39;-1&#39;
+
+# Verify current device being used
+print(f&quot;TensorFlow is using: {tf.config.get_visible_devices()}&quot;)
+print(f&quot;Built with CUDA: {tf.test.is_built_with_cuda()}&quot;)
 
 
-<span class="c1"># Create and visualize stimuli</span>
-<span class="n">data_list</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># Initialize an empty list to store the data</span>
 
-<span class="c1"># Loop through the files in the folder</span>
-<span class="k">for</span> <span class="n">frame</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">150</span><span class="p">):</span>
-    <span class="c1"># Load the .png file</span>
-    <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pRF_images_path</span><span class="p">,</span><span class="s1">&#39;run5_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.png&#39;</span><span class="p">)</span>
-    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
-    <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+from braincoder.models import GaussianPRF2DWithHRF
+from braincoder.hrf import SPMHRFModel
+from braincoder.optimize import ParameterFitter
 
-<span class="c1"># Stack the data along the third dimension to create the design matrix</span>
-<span class="n">design_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">data_list</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+## For pRF map plotting
+import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+from matplotlib.patches import Wedge
+from matplotlib.patches import Rectangle
+import matplotlib.colors as mcolors
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;design matrix shape: </span><span class="si">{</span><span class="n">design_matrix</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+# Retmaps code
+from cfmap.color_palettes import get_color_palettes
+from cfmap.pRF_processing import plot_prf_histograms, plot_roi_retMap
+
+
+# Load color palettes
+color_palettes = get_color_palettes()
+color_palettes = get_color_palettes()
+colors_ecc = color_palettes[&quot;eccentricity&quot;]
+colors_polar = color_palettes[&quot;polar&quot;]
+
+
+# Create save path
+base_save_path = os.path.join(base_data_path, &#39;pRF_results&#39;, projType)
+os.makedirs(base_save_path, exist_ok=True)
+
+
+# Create and visualize stimuli
+data_list = [] # Initialize an empty list to store the data
+
+# Loop through the files in the folder
+for frame in range(150):
+    # Load the .png file
+    file_path = os.path.join(pRF_images_path,&#39;run5_&#39; + str(frame) + &#39;.png&#39;)
+    image = Image.open(file_path)
+    data = np.array(image)
+    data_list.append(data)
+
+# Stack the data along the third dimension to create the design matrix
+design_matrix = np.stack(data_list, axis=-1)
+
+print(f&#39;design matrix shape: {design_matrix.shape}&#39;)
 
 
 
-<span class="c1"># screen pRF stimulus parameters</span>
-<span class="n">screen_height_cm</span>   <span class="o">=</span> <span class="mf">69.4</span><span class="c1"># 32 #39.29 #69.84 #12.65</span>
-<span class="n">screen_size_cm</span>     <span class="o">=</span> <span class="n">screen_height_cm</span><span class="o">/</span><span class="mi">2</span>
-<span class="n">screen_distance_cm</span> <span class="o">=</span> <span class="mi">199</span> <span class="c1">#5.0</span>
+# screen pRF stimulus parameters
+screen_height_cm   = 69.4# 32 #39.29 #69.84 #12.65
+screen_size_cm     = screen_height_cm/2
+screen_distance_cm = 199 #5.0
 
-<span class="c1"># calculate max stim ecc</span>
-<span class="n">max_ecc</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan</span><span class="p">(</span><span class="n">screen_size_cm</span><span class="o">/</span><span class="n">screen_distance_cm</span><span class="p">)</span>
+# calculate max stim ecc
+max_ecc = math.atan(screen_size_cm/screen_distance_cm)
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;max ecc in rad: &#39;</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
-<span class="n">max_ecc_deg</span>        <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">max_ecc</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;max ecc in deg: &#39;</span><span class="p">,</span> <span class="n">max_ecc_deg</span><span class="p">)</span>
-<span class="n">screen_size_deg</span> <span class="o">=</span> <span class="n">max_ecc_deg</span>
-<span class="n">paradigm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">design_matrix</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+print(&#39;max ecc in rad: &#39;, max_ecc)
+max_ecc_deg        = round(math.degrees(max_ecc))
+print(&#39;max ecc in deg: &#39;, max_ecc_deg)
+screen_size_deg = max_ecc_deg
+paradigm = np.transpose(design_matrix, (2, 0, 1))
 
-<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">screen_size_deg</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">screen_size_deg</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">paradigm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">screen_size_deg</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">screen_size_deg</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">paradigm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+x, y = np.meshgrid(np.linspace(-screen_size_deg/2, screen_size_deg/2, paradigm.shape[1]),
+                    np.linspace(-screen_size_deg/2, screen_size_deg/2, paradigm.shape[2]))
 
-<span class="n">grid_coordinates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">flatten</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;paradigm shape: </span><span class="si">{</span><span class="n">paradigm</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+grid_coordinates = pd.DataFrame(np.array([x.flatten(), y.flatten()]).T.astype(np.float32), columns=[&quot;x&quot;, &quot;y&quot;])
+print(f&quot;paradigm shape: {paradigm.shape}&quot;)
 
-<span class="k">def</span><span class="w"> </span><span class="nf">make_grid_parameters</span><span class="p">(</span><span class="n">min_ecc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-                     <span class="n">max_ecc</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span>
-                     <span class="n">min_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
-                     <span class="n">max_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-                     <span class="n">nr_of_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,):</span>
-    <span class="n">ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">min_ecc</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">max_ecc</span><span class="p">),</span> <span class="n">nr_of_points</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-    <span class="n">sizes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">min_size</span><span class="p">,</span> <span class="n">max_size</span><span class="p">,</span> <span class="n">nr_of_points</span><span class="p">)</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="o">-</span><span class="n">ecc</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ecc</span><span class="p">))</span>
+def make_grid_parameters(min_ecc: float = 0.1,
+                     max_ecc: float = 11,
+                     min_size: float = 0.1,
+                     max_size: float = 5,
+                     nr_of_points: int = 40,):
+    ecc = np.linspace(np.sqrt(min_ecc), np.sqrt(max_ecc), nr_of_points//2)**2
+    sizes = np.linspace(min_size, max_size, nr_of_points)
+    x = np.concatenate((-ecc[::-1], ecc))
 
-    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">:</span><span class="n">sizes</span><span class="p">}</span>
+    return {&#39;x&#39;:x, &#39;y&#39;:x, &#39;size&#39;:sizes}
 </pre></div>
 </div>
 </div>
@@ -319,53 +320,53 @@ paradigm shape: (150, 150, 150)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">subject_id</span> <span class="o">=</span> <span class="n">subject_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">session_id</span> <span class="o">=</span> <span class="s1">&#39;ses-01&#39;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>subject_id = subject_ids[0]
+session_id = &#39;ses-01&#39;
 
 
 
-<span class="c1"># Setup paths</span>
-<span class="n">subject_session_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;sub-</span><span class="si">{</span><span class="n">subject_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">session_id</span><span class="si">}</span><span class="s2">&quot;</span>
-<span class="n">fs_subject_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="n">subject_session_name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">subject_session_name</span><span class="si">}</span><span class="s2">_iso&quot;</span><span class="p">)</span>
-<span class="n">surf_atlas_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fs_subject_path</span><span class="p">,</span> <span class="s2">&quot;surf&quot;</span><span class="p">)</span>
-<span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="n">subject_session_name</span><span class="p">)</span>
-<span class="n">pRF_params_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_data_path</span><span class="p">,</span> <span class="s1">&#39;pRF_results&#39;</span><span class="p">,</span> <span class="n">projType</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;sub-</span><span class="si">{</span><span class="n">subject_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+# Setup paths
+subject_session_name = f&quot;sub-{subject_id}_{session_id}&quot;
+fs_subject_path = os.path.join(base_data_path, subject_session_name, f&quot;{subject_session_name}_iso&quot;)
+surf_atlas_path = os.path.join(fs_subject_path, &quot;surf&quot;)
+save_path = os.path.join(base_data_path, subject_session_name)
+pRF_params_path = os.path.join(base_data_path, &#39;pRF_results&#39;, projType, f&quot;sub-{subject_id}&quot;)
 
-<span class="c1"># Load necessary data</span>
-<span class="n">v1_centers</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;v1_centers.npy&quot;</span><span class="p">),</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-<span class="n">v1_rights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="s2">&quot;v1_rights.npy&quot;</span><span class="p">),</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+# Load necessary data
+v1_centers = np.load(os.path.join(save_path, &quot;v1_centers.npy&quot;), allow_pickle=True).item()
+v1_rights = np.load(os.path.join(save_path, &quot;v1_rights.npy&quot;), allow_pickle=True).item()
 
-<span class="c1"># Create subject and flatmaps</span>
-<span class="n">sub</span> <span class="o">=</span> <span class="n">ny</span><span class="o">.</span><span class="n">freesurfer_subject</span><span class="p">(</span><span class="n">fs_subject_path</span><span class="p">)</span>
-<span class="n">map_projs</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">ny</span><span class="o">.</span><span class="n">map_projection</span><span class="p">(</span><span class="n">chirality</span><span class="o">=</span><span class="n">h</span><span class="p">,</span>
-                                <span class="n">center</span><span class="o">=</span><span class="n">v1_centers</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
-                                <span class="n">center_right</span><span class="o">=</span><span class="n">v1_rights</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
-                                <span class="n">method</span><span class="o">=</span><span class="s1">&#39;orthographic&#39;</span><span class="p">,</span>
-                                <span class="n">radius</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>
-                                <span class="n">registration</span><span class="o">=</span><span class="s1">&#39;native&#39;</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;lh&#39;</span><span class="p">,</span> <span class="s1">&#39;rh&#39;</span><span class="p">]}</span>
-<span class="n">flatmaps</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">mp</span><span class="p">(</span><span class="n">sub</span><span class="o">.</span><span class="n">hemis</span><span class="p">[</span><span class="n">h</span><span class="p">])</span> <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">mp</span> <span class="ow">in</span> <span class="n">map_projs</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+# Create subject and flatmaps
+sub = ny.freesurfer_subject(fs_subject_path)
+map_projs = {h: ny.map_projection(chirality=h,
+                                center=v1_centers[h],
+                                center_right=v1_rights[h],
+                                method=&#39;orthographic&#39;,
+                                radius=np.pi/2,
+                                registration=&#39;native&#39;)
+                for h in [&#39;lh&#39;, &#39;rh&#39;]}
+flatmaps = {h: mp(sub.hemis[h]) for h, mp in map_projs.items()}
 
 
 
-<span class="c1">### Then we narrow down the vertices to just one hemisphere (and optionally to an ROI using the occipital atlas)</span>
+### Then we narrow down the vertices to just one hemisphere (and optionally to an ROI using the occipital atlas)
 
-<span class="n">h</span> <span class="o">=</span> <span class="s1">&#39;lh&#39;</span>  <span class="c1"># Change this to &#39;lh&#39; or &#39;rh&#39; as needed</span>
+h = &#39;lh&#39;  # Change this to &#39;lh&#39; or &#39;rh&#39; as needed
 
-<span class="c1"># Get cortex index</span>
-<span class="n">cortex_index</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+# Get cortex index
+cortex_index = flatmaps[h].prop(&#39;index&#39;)
 
-<span class="c1"># Load atlas maps</span>
-<span class="n">varea_map</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_varea.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
-<span class="n">sigma_map</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_sigma.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
-<span class="n">benson_eccen</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_eccen.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
-<span class="n">benson_polar</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.benson14_angle.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
-<span class="n">wang15_map</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">freesurfer</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">read_morph_data</span><span class="p">(</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">surf_atlas_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">.wang15.curv&#39;</span><span class="p">))[</span><span class="n">cortex_index</span><span class="p">]</span>
+# Load atlas maps
+varea_map = nib.freesurfer.io.read_morph_data(
+    os.path.join(surf_atlas_path, f&#39;{h}.benson14_varea.curv&#39;))[cortex_index]
+sigma_map = nib.freesurfer.io.read_morph_data(
+    os.path.join(surf_atlas_path, f&#39;{h}.benson14_sigma.curv&#39;))[cortex_index]
+benson_eccen = nib.freesurfer.io.read_morph_data(
+    os.path.join(surf_atlas_path, f&#39;{h}.benson14_eccen.curv&#39;))[cortex_index]
+benson_polar = nib.freesurfer.io.read_morph_data(
+    os.path.join(surf_atlas_path, f&#39;{h}.benson14_angle.curv&#39;))[cortex_index]
+wang15_map = nib.freesurfer.io.read_morph_data(
+    os.path.join(surf_atlas_path, f&#39;{h}.wang15.curv&#39;))[cortex_index]
 </pre></div>
 </div>
 </div>
@@ -376,37 +377,37 @@ paradigm shape: (150, 150, 150)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Select source ROI and mask</span>
-<span class="n">roi_selection</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Select source ROI and mask
+roi_selection=[1]
 
-<span class="c1">#ecc_range=(0.75, 6.75)</span>
-<span class="n">ecc_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">)</span>
-
-
-
-<span class="c1"># Create mask for V1 (regions 0 and 1 in Wang atlas)</span>
-<span class="n">roi_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">wang15_map</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>  <span class="c1"># V1v and V1d</span>
-
-<span class="c1">## Use Benson eccentricity to narrow down the source ROI extent</span>
-<span class="n">param_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">benson_eccen</span> <span class="o">&gt;</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">benson_eccen</span> <span class="o">&lt;</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">pol_mask</span> <span class="o">=</span>  <span class="p">(</span><span class="n">benson_polar</span> <span class="o">&gt;=</span> <span class="mi">35</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">benson_polar</span> <span class="o">&lt;=</span> <span class="mi">135</span><span class="p">)</span>
-<span class="n">source_mask</span> <span class="o">=</span> <span class="n">roi_mask</span> <span class="o">&amp;</span> <span class="n">param_mask</span> <span class="o">&amp;</span> <span class="n">pol_mask</span>
-
-
-<span class="c1"># Extract ROI submesh (and update vertex indices)</span>
-<span class="n">roi_submesh</span> <span class="o">=</span> <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">submesh</span><span class="p">(</span><span class="n">source_mask</span><span class="p">)</span>
-<span class="n">roi_submesh</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
-<span class="n">submesh_labels</span> <span class="o">=</span> <span class="n">roi_submesh</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)</span>
-<span class="n">sub_source_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">labels</span><span class="p">,</span> <span class="n">submesh_labels</span><span class="p">)</span>
+#ecc_range=(0.75, 6.75)
+ecc_range=(0, 6.5)
 
 
 
-<span class="c1"># Get the exact indices of your source vertices</span>
-<span class="n">source_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sub_source_mask</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of source vertices: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">source_indices</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+# Create mask for V1 (regions 0 and 1 in Wang atlas)
+roi_mask = np.isin(wang15_map, [1, 2])  # V1v and V1d
 
-<span class="c1">### V1 reference retinotopy from Benson atlas</span>
-<span class="n">plot_roi_retMap</span><span class="p">(</span><span class="n">benson_eccen</span><span class="p">,</span> <span class="n">benson_polar</span><span class="p">,</span> <span class="n">sub_source_mask</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Template eccentricity&#39;</span><span class="p">,</span> <span class="s1">&#39;Template polar angle&#39;</span><span class="p">],</span> <span class="n">flatmaps</span><span class="p">,</span> <span class="n">colors_ecc</span><span class="p">,</span> <span class="n">colors_polar</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+## Use Benson eccentricity to narrow down the source ROI extent
+param_mask = (benson_eccen &gt; ecc_range[0]) &amp; (benson_eccen &lt; ecc_range[1])
+pol_mask =  (benson_polar &gt;= 35) &amp; (benson_polar &lt;= 135)
+source_mask = roi_mask &amp; param_mask &amp; pol_mask
+
+
+# Extract ROI submesh (and update vertex indices)
+roi_submesh = flatmaps[h].submesh(source_mask)
+roi_submesh.prop(&#39;index&#39;)
+submesh_labels = roi_submesh.prop(&#39;label&#39;)
+sub_source_mask = np.isin(flatmaps[h].labels, submesh_labels)
+
+
+
+# Get the exact indices of your source vertices
+source_indices = np.where(sub_source_mask)[0]
+print(f&quot;Number of source vertices: {len(source_indices)}&quot;)
+
+### V1 reference retinotopy from Benson atlas
+plot_roi_retMap(benson_eccen, benson_polar, sub_source_mask, [&#39;Template eccentricity&#39;, &#39;Template polar angle&#39;], flatmaps, colors_ecc, colors_polar, h)
 <br/><br/><br/></pre></div>
 </div>
 </div>
@@ -432,19 +433,19 @@ Number of source vertices: 863
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;TF_GPU_ALLOCATOR&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;cuda_malloc_async&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>os.environ[&quot;TF_GPU_ALLOCATOR&quot;] = &quot;cuda_malloc_async&quot;
 
-<span class="c1"># Load time series data</span>
-<span class="n">ts_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pRF_params_path</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s1">_averaged_cleaned_zscored.npy&#39;</span><span class="p">)</span>
+# Load time series data
+ts_path = os.path.join(pRF_params_path, f&#39;{h}_averaged_cleaned_zscored.npy&#39;)
 
-<span class="n">time_series</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ts_path</span><span class="p">))</span>
+time_series = np.nan_to_num(np.load(ts_path))
 
-<span class="n">train_data</span> <span class="o">=</span> <span class="n">time_series</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>
+train_data = time_series[sub_source_mask].T
 
 
-<span class="k">del</span> <span class="n">time_series</span>
+del time_series
 
-<span class="n">train_data</span><span class="o">.</span><span class="n">shape</span>
+train_data.shape
 </pre></div>
 </div>
 </div>
@@ -461,78 +462,78 @@ Number of source vertices: 863
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">###### pRF modeling #######</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>###### pRF modeling #######
 
-<span class="n">hrf_model</span> <span class="o">=</span> <span class="n">SPMHRFModel</span><span class="p">(</span><span class="n">tr</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">4.5</span><span class="p">,</span> <span class="n">dispersion</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
-
-
-<span class="n">model_gauss</span> <span class="o">=</span> <span class="n">GaussianPRF2DWithHRF</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span>
-                                    <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span>
-                                    <span class="n">hrf_model</span><span class="o">=</span><span class="n">hrf_model</span><span class="p">,</span>
-                                    <span class="n">grid_coordinates</span><span class="o">=</span><span class="n">grid_coordinates</span><span class="p">)</span>
-
-<span class="c1">###### Grid search #######</span>
-
-<span class="n">grid_min_ecc</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">grid_max_ecc</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">grid_min_sigma</span> <span class="o">=</span> <span class="mf">0.1</span>
-<span class="n">grid_max_sigma</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">nr_of_gridfit_points</span> <span class="o">=</span> <span class="mi">20</span>
-
-<span class="n">grid_parameters</span> <span class="o">=</span> <span class="n">make_grid_parameters</span><span class="p">(</span><span class="n">min_ecc</span><span class="o">=</span><span class="n">grid_min_ecc</span><span class="p">,</span>
-                                            <span class="n">max_ecc</span><span class="o">=</span><span class="n">grid_max_ecc</span><span class="p">,</span>
-                                            <span class="n">min_size</span><span class="o">=</span><span class="n">grid_min_sigma</span><span class="p">,</span>
-                                            <span class="n">max_size</span><span class="o">=</span><span class="n">grid_max_sigma</span><span class="p">,</span>
-                                            <span class="n">nr_of_points</span><span class="o">=</span><span class="n">nr_of_gridfit_points</span><span class="p">)</span>
-
-<span class="n">par_fitter</span> <span class="o">=</span> <span class="n">ParameterFitter</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model_gauss</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">)</span>
-
-<span class="n">baseline</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">]</span>
-<span class="n">amplitude</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">]</span>
-
-<span class="n">pars_gauss_grid</span> <span class="o">=</span> <span class="n">par_fitter</span><span class="o">.</span><span class="n">fit_grid</span><span class="p">(</span><span class="n">grid_parameters</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
-                                        <span class="n">grid_parameters</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">],</span>
-                                        <span class="n">grid_parameters</span><span class="p">[</span><span class="s1">&#39;size&#39;</span><span class="p">],</span>
-                                        <span class="n">baseline</span><span class="p">,</span>
-                                        <span class="n">amplitude</span><span class="p">,</span>
-                                        <span class="n">correlation_cost</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+hrf_model = SPMHRFModel(tr=2, delay=4.5, dispersion=0.75)
 
 
+model_gauss = GaussianPRF2DWithHRF(data=train_data,
+                                    paradigm=paradigm,
+                                    hrf_model=hrf_model,
+                                    grid_coordinates=grid_coordinates)
 
-<span class="c1">###### Iterarive search (gtradient descent) #######</span>
+###### Grid search #######
 
-<span class="n">positive_amplitude</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">min_n_iterations</span> <span class="o">=</span> <span class="mi">400</span>
-<span class="n">max_n_iterations</span> <span class="o">=</span> <span class="mi">2000</span>
+grid_min_ecc = 0.1
+grid_max_ecc = 8
+grid_min_sigma = 0.1
+grid_max_sigma = 5
+nr_of_gridfit_points = 20
 
-<span class="c1"># Fit baseline and amplitude</span>
+grid_parameters = make_grid_parameters(min_ecc=grid_min_ecc,
+                                            max_ecc=grid_max_ecc,
+                                            min_size=grid_min_sigma,
+                                            max_size=grid_max_sigma,
+                                            nr_of_points=nr_of_gridfit_points)
 
-<span class="n">pars_gauss_ols</span> <span class="o">=</span> <span class="n">par_fitter</span><span class="o">.</span><span class="n">refine_baseline_and_amplitude</span><span class="p">(</span><span class="n">pars_gauss_grid</span><span class="p">,</span>
-                                                            <span class="n">positive_amplitude</span><span class="o">=</span><span class="n">positive_amplitude</span><span class="p">)</span>
-<span class="n">pars_gauss_gd</span> <span class="o">=</span> <span class="n">par_fitter</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">init_pars</span><span class="o">=</span><span class="n">pars_gauss_ols</span><span class="p">,</span>
-                                <span class="n">min_n_iterations</span><span class="o">=</span><span class="n">min_n_iterations</span><span class="p">,</span>
-                                <span class="n">max_n_iterations</span><span class="o">=</span><span class="n">max_n_iterations</span><span class="p">)</span>
+par_fitter = ParameterFitter(model=model_gauss, data=train_data, paradigm=paradigm)
+
+baseline = [0.0]
+amplitude = [1.0]
+
+pars_gauss_grid = par_fitter.fit_grid(grid_parameters[&#39;x&#39;],
+                                        grid_parameters[&#39;y&#39;],
+                                        grid_parameters[&#39;size&#39;],
+                                        baseline,
+                                        amplitude,
+                                        correlation_cost=True)
 
 
-<span class="c1"># Now fit the pRF (2D Gaussian)</span>
-<span class="n">model_hrf</span> <span class="o">=</span> <span class="n">GaussianPRF2DWithHRF</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span>
-                                    <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span>
-                                    <span class="n">hrf_model</span><span class="o">=</span><span class="n">hrf_model</span><span class="p">,</span>
-                                    <span class="n">grid_coordinates</span><span class="o">=</span><span class="n">grid_coordinates</span><span class="p">,</span>
-                                    <span class="n">flexible_hrf_parameters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="n">par_fitter_hrf</span> <span class="o">=</span> <span class="n">ParameterFitter</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model_hrf</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">train_data</span><span class="p">,</span> <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">)</span>
+###### Iterarive search (gtradient descent) #######
 
-<span class="c1"># Then fit the HRF</span>
-<span class="c1"># We set hrf_delay and hrf_dispersion to standard values</span>
-<span class="n">pars_gauss_gd</span><span class="p">[</span><span class="s1">&#39;hrf_delay&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.5</span>
-<span class="n">pars_gauss_gd</span><span class="p">[</span><span class="s1">&#39;hrf_dispersion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.75</span>
+positive_amplitude = True
+min_n_iterations = 400
+max_n_iterations = 2000
 
-<span class="n">pars_gauss_hrf</span> <span class="o">=</span> <span class="n">par_fitter_hrf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">init_pars</span><span class="o">=</span><span class="n">pars_gauss_gd</span><span class="p">,</span>
-                                    <span class="n">min_n_iterations</span><span class="o">=</span><span class="n">min_n_iterations</span><span class="p">,</span>
-                                    <span class="n">max_n_iterations</span><span class="o">=</span><span class="n">max_n_iterations</span><span class="p">)</span>
+# Fit baseline and amplitude
 
-<span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">par_fitter_hrf</span><span class="o">.</span><span class="n">get_rsq</span><span class="p">(</span><span class="n">pars_gauss_hrf</span><span class="p">)</span>
+pars_gauss_ols = par_fitter.refine_baseline_and_amplitude(pars_gauss_grid,
+                                                            positive_amplitude=positive_amplitude)
+pars_gauss_gd = par_fitter.fit(init_pars=pars_gauss_ols,
+                                min_n_iterations=min_n_iterations,
+                                max_n_iterations=max_n_iterations)
+
+
+# Now fit the pRF (2D Gaussian)
+model_hrf = GaussianPRF2DWithHRF(data=train_data,
+                                    paradigm=paradigm,
+                                    hrf_model=hrf_model,
+                                    grid_coordinates=grid_coordinates,
+                                    flexible_hrf_parameters=True)
+
+par_fitter_hrf = ParameterFitter(model=model_hrf, data=train_data, paradigm=paradigm)
+
+# Then fit the HRF
+# We set hrf_delay and hrf_dispersion to standard values
+pars_gauss_gd[&#39;hrf_delay&#39;] = 4.5
+pars_gauss_gd[&#39;hrf_dispersion&#39;] = 0.75
+
+pars_gauss_hrf = par_fitter_hrf.fit(init_pars=pars_gauss_gd,
+                                    min_n_iterations=min_n_iterations,
+                                    max_n_iterations=max_n_iterations)
+
+pars_gauss_hrf[&#39;r2&#39;] = par_fitter_hrf.get_rsq(pars_gauss_hrf)
 <br/><br/></pre></div>
 </div>
 </div>
@@ -641,31 +642,31 @@ Current R2: 0.70904/Best R2: 0.70904: 100%|██████████| 2000/
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
-<span class="n">sigma</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;sd&#39;</span><span class="p">]</span>
-<span class="n">r2</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;r2&#39;</span><span class="p">]</span>
-<span class="n">baseline</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;baseline&#39;</span><span class="p">]</span>
-<span class="n">amplitude</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;amplitude&#39;</span><span class="p">]</span>
-<span class="n">hrf_delay</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;hrf_delay&#39;</span><span class="p">]</span>
-<span class="n">hrf_dispersion</span> <span class="o">=</span> <span class="n">pars_gauss_hrf</span><span class="p">[</span><span class="s1">&#39;hrf_dispersion&#39;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x = pars_gauss_hrf[&#39;x&#39;]
+y = pars_gauss_hrf[&#39;y&#39;]
+sigma = pars_gauss_hrf[&#39;sd&#39;]
+r2 = pars_gauss_hrf[&#39;r2&#39;]
+baseline = pars_gauss_hrf[&#39;baseline&#39;]
+amplitude = pars_gauss_hrf[&#39;amplitude&#39;]
+hrf_delay = pars_gauss_hrf[&#39;hrf_delay&#39;]
+hrf_dispersion = pars_gauss_hrf[&#39;hrf_dispersion&#39;]
 
 
-<span class="c1"># Calculate derived measures</span>
-<span class="n">ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
-<span class="n">polar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+# Calculate derived measures
+ecc = np.abs(x + 1j*y)
+polar = np.angle(x + 1j*y)
 
 
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_prf_histograms</span><span class="p">(</span>
-    <span class="n">ecc</span><span class="p">,</span> <span class="n">polar</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span>
-    <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">],</span>
-    <span class="n">ylims</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">60</span><span class="p">)],</span>
-    <span class="n">xlims</span><span class="o">=</span><span class="p">[(</span><span class="n">ecc_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ecc_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
-    <span class="n">r2_threshold</span><span class="o">=</span><span class="mf">0.0</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Prediction grid optimization (residual sum of the squares)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+fig = plot_prf_histograms(
+    ecc, polar, sigma, r2,
+    bins=[200, 200, 200, 200],
+    ylims=[(0, 40), (0, 40), (0, 200), (0, 60)],
+    xlims=[(ecc_range[0], ecc_range[1]), (-np.pi/2, np.pi/2), (0, 1.5), (0, 1)],
+    r2_threshold=0.0
+)
+plt.suptitle(&#39;Prediction grid optimization (residual sum of the squares)&#39;, fontsize=16, y=1.1)
+plt.show()
 <br/></pre></div>
 </div>
 </div>
@@ -680,171 +681,171 @@ Current R2: 0.70904/Best R2: 0.70904: 100%|██████████| 2000/
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Plot pRF maps (eccentricity, polar angle, sigma and residual sum of the squares)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>## Plot pRF maps (eccentricity, polar angle, sigma and residual sum of the squares)
 
-<span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">left_ax</span><span class="p">,</span> <span class="n">left_middle_ax</span><span class="p">,</span> <span class="n">right_middle_ax</span><span class="p">,</span> <span class="n">right_ax</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">72</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span>
+(fig, (left_ax, left_middle_ax, right_middle_ax, right_ax)) = plt.subplots(1, 4, figsize=(16, 4), dpi=72*4)
 
-<span class="n">ecc_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">varea_map</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-<span class="n">ecc_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">ecc</span>
-<span class="n">polar_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">varea_map</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-<span class="n">polar_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">polar</span>
-<span class="n">sigma_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">varea_map</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-<span class="n">sigma_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">sigma</span>
-<span class="n">r2_map</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">varea_map</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
-<span class="n">r2_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">r2</span>
-
-
-<span class="c1"># Eccentricity</span>
-<span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
-    <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
-    <span class="n">axes</span><span class="o">=</span><span class="n">left_ax</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">ecc_map</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s1">&#39;matplotlib_cmap&#39;</span><span class="p">],</span>
-    <span class="n">mask</span><span class="o">=</span><span class="n">sub_source_mask</span><span class="p">,</span>
-    <span class="n">vmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]),</span>
-    <span class="n">vmax</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ecc_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
-<span class="p">)</span>
-
-<span class="c1"># Polar angle</span>
-<span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
-    <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
-    <span class="n">axes</span><span class="o">=</span><span class="n">left_middle_ax</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">polar_map</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">[</span><span class="s1">&#39;matplotlib_cmap&#39;</span><span class="p">],</span>
-    <span class="n">mask</span><span class="o">=</span><span class="n">sub_source_mask</span>
-<span class="p">)</span>
-
-<span class="c1"># Sigma (pRF size)</span>
-<span class="n">size_vmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">])</span>
-<span class="n">size_vmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sigma range (masked): </span><span class="si">{</span><span class="n">size_vmin</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">size_vmax</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+ecc_map = np.full(len(varea_map), np.nan)
+ecc_map[sub_source_mask] = ecc
+polar_map = np.full(len(varea_map), np.nan)
+polar_map[sub_source_mask] = polar
+sigma_map = np.full(len(varea_map), np.nan)
+sigma_map[sub_source_mask] = sigma
+r2_map = np.full(len(varea_map), np.nan)
+r2_map[sub_source_mask] = r2
 
 
-<span class="n">sigma_max</span> <span class="o">=</span> <span class="mf">1.5</span>
-<span class="n">size_cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span>
-<span class="n">m_sigma</span> <span class="o">=</span> <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
-    <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
-    <span class="n">axes</span><span class="o">=</span><span class="n">right_middle_ax</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">sigma_map</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="n">size_cmap</span><span class="p">,</span>
-    <span class="n">mask</span><span class="o">=</span><span class="n">sub_source_mask</span><span class="p">,</span>
-    <span class="n">vmin</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">]),</span>
-    <span class="n">vmax</span><span class="o">=</span><span class="n">sigma_max</span> <span class="c1">#np.max(sigma_map[sub_source_mask])</span>
-<span class="p">)</span>
+# Eccentricity
+ny.cortex_plot(
+    flatmaps[h],
+    axes=left_ax,
+    color=ecc_map,
+    cmap=colors_ecc[&#39;matplotlib_cmap&#39;],
+    mask=sub_source_mask,
+    vmin=np.min(ecc_map[sub_source_mask]),
+    vmax=np.max(ecc_map[sub_source_mask])/2
+)
 
-<span class="c1"># Variance explained</span>
-<span class="n">varex_cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">inferno</span>
+# Polar angle
+ny.cortex_plot(
+    flatmaps[h],
+    axes=left_middle_ax,
+    color=polar_map,
+    cmap=colors_polar[&#39;matplotlib_cmap&#39;],
+    mask=sub_source_mask
+)
 
-<span class="n">m_varex</span> <span class="o">=</span> <span class="n">ny</span><span class="o">.</span><span class="n">cortex_plot</span><span class="p">(</span>
-    <span class="n">flatmaps</span><span class="p">[</span><span class="n">h</span><span class="p">],</span>
-    <span class="n">axes</span><span class="o">=</span><span class="n">right_ax</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="n">r2_map</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="n">varex_cmap</span><span class="p">,</span>
-    <span class="n">mask</span><span class="o">=</span><span class="n">sub_source_mask</span><span class="p">,</span>
-    <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-    <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span>
-<span class="p">)</span>
-
-
-<span class="c1"># Legends/Inserts</span>
-
-<span class="c1"># Eccentricity inset (concentric rings)</span>
-<span class="n">ecc_inset</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
-    <span class="n">left_ax</span><span class="p">,</span>
-    <span class="n">width</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
-    <span class="n">height</span><span class="o">=</span><span class="s2">&quot;50%&quot;</span><span class="p">,</span>
-    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-    <span class="n">borderpad</span><span class="o">=-</span><span class="mi">6</span>
-<span class="p">)</span>
-
-<span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
-<span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
-<span class="n">ecc_inset</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mathit</span><span class="si">{r}</span><span class="s1">\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ecc_inset</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
-<span class="n">ecc_inset</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+# Sigma (pRF size)
+size_vmin = np.min(sigma_map[sub_source_mask])
+size_vmax = np.max(sigma_map[sub_source_mask])
+print(f&quot;Sigma range (masked): {size_vmin:.2f} - {size_vmax:.2f}&quot;)
 
 
+sigma_max = 1.5
+size_cmap = plt.cm.jet
+m_sigma = ny.cortex_plot(
+    flatmaps[h],
+    axes=right_middle_ax,
+    color=sigma_map,
+    cmap=size_cmap,
+    mask=sub_source_mask,
+    vmin=np.min(sigma_map[sub_source_mask]),
+    vmax=sigma_max #np.max(sigma_map[sub_source_mask])
+)
 
-<span class="n">num_ecc_colors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">])</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colors_ecc</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">]):</span>
-    <span class="n">inner_r</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="n">num_ecc_colors</span>
-    <span class="n">outer_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_ecc_colors</span>
-    <span class="n">ring</span> <span class="o">=</span> <span class="n">Wedge</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">outer_r</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span>
-                    <span class="n">width</span><span class="o">=</span><span class="n">outer_r</span> <span class="o">-</span> <span class="n">inner_r</span><span class="p">,</span>
-                    <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
-    <span class="n">ecc_inset</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">ring</span><span class="p">)</span>
+# Variance explained
+varex_cmap = plt.cm.inferno
+
+m_varex = ny.cortex_plot(
+    flatmaps[h],
+    axes=right_ax,
+    color=r2_map,
+    cmap=varex_cmap,
+    mask=sub_source_mask,
+    vmin=0,
+    vmax=1
+)
+
+
+# Legends/Inserts
+
+# Eccentricity inset (concentric rings)
+ecc_inset = inset_axes(
+    left_ax,
+    width=&quot;50%&quot;,
+    height=&quot;50%&quot;,
+    loc=&quot;lower right&quot;,
+    borderpad=-6
+)
+
+ecc_inset.set_aspect(&#39;equal&#39;)
+ecc_inset.set_xlim(-1.5, 1.5)
+ecc_inset.set_ylim(-1.5, 1.5)
+ecc_inset.text(0.5, -0.05, r&#39;$\mathit{r}\ (\mathit{deg})$&#39;, ha=&#39;center&#39;, va=&#39;top&#39;, fontsize=14, transform=ecc_inset.transAxes)
+ecc_inset.set_axis_off()
 
 
 
-
-<span class="c1"># Polar angle inset (pie)</span>
-<span class="n">polar_inset</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
-    <span class="n">left_middle_ax</span><span class="p">,</span>
-    <span class="n">width</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">,</span>
-    <span class="n">height</span><span class="o">=</span><span class="s2">&quot;40%&quot;</span><span class="p">,</span>
-    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-    <span class="n">borderpad</span><span class="o">=-</span><span class="mi">6</span>
-<span class="p">)</span>
-
-
-<span class="n">polar_inset</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
-<span class="n">polar_inset</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
-<span class="n">polar_inset</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span>
-    <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">colors_polar</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">]),</span>
-    <span class="n">colors</span><span class="o">=</span><span class="n">colors_polar</span><span class="p">[</span><span class="s2">&quot;hex&quot;</span><span class="p">],</span>
-    <span class="n">startangle</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
-    <span class="n">counterclock</span><span class="o">=</span><span class="kc">False</span>
-<span class="p">)</span>
-
-<span class="n">polar_inset</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\theta\ (\mathit</span><span class="si">{rad}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">polar_inset</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+num_ecc_colors = len(colors_ecc[&quot;hex&quot;])
+for i, color in enumerate(colors_ecc[&quot;hex&quot;]):
+    inner_r = i / num_ecc_colors
+    outer_r = (i + 1) / num_ecc_colors
+    ring = Wedge((0, 0), outer_r, 0, 360,
+                    width=outer_r - inner_r,
+                    color=color)
+    ecc_inset.add_patch(ring)
 
 
-<span class="c1"># Sigma colorbar (standard scalar bar)</span>
-<span class="c1"># Create a gradient rectangle</span>
-
-<span class="n">sigma_rect_ax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
-    <span class="n">right_middle_ax</span><span class="p">,</span>
-    <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30%&quot;</span><span class="p">,</span>
-    <span class="n">height</span><span class="o">=</span><span class="s2">&quot;10%&quot;</span><span class="p">,</span>
-    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-    <span class="n">borderpad</span><span class="o">=-</span><span class="mi">3</span>
-<span class="p">)</span>
-
-<span class="n">gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">gradient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">gradient</span><span class="p">,</span> <span class="n">gradient</span><span class="p">))</span>
-
-<span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">size_cmap</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-
-<span class="c1">#Add labels</span>
-<span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">sigma_map</span><span class="p">[</span><span class="n">sub_source_mask</span><span class="p">])</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">sigma_max</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\sigma\ (\mathit</span><span class="si">{deg}</span><span class="s1">)$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
-<span class="n">sigma_rect_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-
-<span class="c1"># Varex colorbar (standard scalar bar)</span>
-<span class="n">varex_rect_ax</span> <span class="o">=</span> <span class="n">inset_axes</span><span class="p">(</span>
-    <span class="n">right_ax</span><span class="p">,</span>
-    <span class="n">width</span><span class="o">=</span><span class="s2">&quot;30%&quot;</span><span class="p">,</span>
-    <span class="n">height</span><span class="o">=</span><span class="s2">&quot;10%&quot;</span><span class="p">,</span>
-    <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">,</span>
-    <span class="n">borderpad</span><span class="o">=-</span><span class="mi">3</span>
-<span class="p">)</span>
-
-<span class="c1"># Create gradient image</span>
-<span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">gradient</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">varex_cmap</span><span class="p">,</span>
-                        <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
-<span class="c1"># Add labels</span>
-<span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.3</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$\mathit</span><span class="si">{r}</span><span class="s1">\!</span><span class="si">{}</span><span class="s1">^2$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
-<span class="n">varex_rect_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
 
 
-<span class="c1"># Clean axes</span>
-<span class="n">left_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-<span class="n">left_middle_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-<span class="n">right_middle_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-<span class="n">right_ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+# Polar angle inset (pie)
+polar_inset = inset_axes(
+    left_middle_ax,
+    width=&quot;40%&quot;,
+    height=&quot;40%&quot;,
+    loc=&quot;lower right&quot;,
+    borderpad=-6
+)
+
+
+polar_inset.set_aspect(&#39;equal&#39;)
+polar_inset.set_axis_off()
+polar_inset.pie(
+    [1]*len(colors_polar[&quot;hex&quot;]),
+    colors=colors_polar[&quot;hex&quot;],
+    startangle=180,
+    counterclock=False
+)
+
+polar_inset.text(0.5, -0.05, r&#39;$\theta\ (\mathit{rad})$&#39;, ha=&#39;center&#39;, va=&#39;top&#39;, fontsize=14, transform=polar_inset.transAxes)
+
+
+# Sigma colorbar (standard scalar bar)
+# Create a gradient rectangle
+
+sigma_rect_ax = inset_axes(
+    right_middle_ax,
+    width=&quot;30%&quot;,
+    height=&quot;10%&quot;,
+    loc=&quot;lower right&quot;,
+    borderpad=-3
+)
+
+gradient = np.linspace(0, 1, 256).reshape(1, -1)
+gradient = np.vstack((gradient, gradient))
+
+sigma_rect_ax.imshow(gradient, aspect=&#39;auto&#39;, cmap=size_cmap, extent=[0, 1, 0, 1])
+
+#Add labels
+sigma_rect_ax.text(0, -0.3, f&#39;{np.min(sigma_map[sub_source_mask]):.2f}&#39;, ha=&#39;left&#39;, va=&#39;top&#39;, fontsize=10)
+sigma_rect_ax.text(1, -0.3, f&#39;{sigma_max:.2f}&#39;, ha=&#39;right&#39;, va=&#39;top&#39;, fontsize=10)
+sigma_rect_ax.text(0.5, 1.3, r&#39;$\sigma\ (\mathit{deg})$&#39;, ha=&#39;center&#39;, va=&#39;bottom&#39;, fontsize=14, transform=sigma_rect_ax.transAxes)
+sigma_rect_ax.axis(&#39;off&#39;)
+
+# Varex colorbar (standard scalar bar)
+varex_rect_ax = inset_axes(
+    right_ax,
+    width=&quot;30%&quot;,
+    height=&quot;10%&quot;,
+    loc=&quot;lower right&quot;,
+    borderpad=-3
+)
+
+# Create gradient image
+varex_rect_ax.imshow(gradient, aspect=&#39;auto&#39;, cmap=varex_cmap,
+                        extent=[0, 1, 0, 1])
+# Add labels
+varex_rect_ax.text(0, -0.3, &#39;0&#39;, ha=&#39;left&#39;, va=&#39;top&#39;, fontsize=12)
+varex_rect_ax.text(1, -0.3, &#39;1&#39;, ha=&#39;right&#39;, va=&#39;top&#39;, fontsize=12)
+varex_rect_ax.text(0.5, 1.3, r&#39;$\mathit{r}\!{}^2$&#39;, ha=&#39;center&#39;, va=&#39;bottom&#39;, fontsize=14, transform=varex_rect_ax.transAxes)
+varex_rect_ax.axis(&#39;off&#39;)
+
+
+# Clean axes
+left_ax.axis(&#39;off&#39;)
+left_middle_ax.axis(&#39;off&#39;)
+right_middle_ax.axis(&#39;off&#39;)
+right_ax.axis(&#39;off&#39;)
 </pre></div>
 </div>
 </div>
@@ -882,62 +883,62 @@ Sigma range (masked): 0.13 - 6.09
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="c1"># Map correlations</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">pearsonr</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pingouin</span><span class="w"> </span><span class="kn">import</span> <span class="n">circ_corrcl</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span># Map correlations
+from scipy.stats import pearsonr
+from pingouin import circ_corrcl
 
-<span class="n">mask</span> <span class="o">=</span> <span class="n">sub_source_mask</span>
+mask = sub_source_mask
 
-<span class="n">ecc_pRF</span> <span class="o">=</span> <span class="n">ecc_map</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-<span class="n">pol_pRF</span> <span class="o">=</span> <span class="n">polar_map</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-<span class="n">ecc_atlas</span> <span class="o">=</span> <span class="n">benson_eccen</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-<span class="n">pol_atlas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">benson_polar</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+ecc_pRF = ecc_map[mask]
+pol_pRF = polar_map[mask]
+ecc_atlas = benson_eccen[mask]
+pol_atlas = np.deg2rad(benson_polar[mask] *2)-np.pi
 
-<span class="c1"># Compute circular correlation</span>
-<span class="n">corr_pol</span> <span class="o">=</span> <span class="n">circ_corrcl</span><span class="p">(</span><span class="n">pol_pRF</span><span class="p">,</span> <span class="n">pol_atlas</span><span class="p">)</span>
-<span class="n">corr_pol_rho</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">corr_pol_pval</span> <span class="o">=</span> <span class="n">corr_pol</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+# Compute circular correlation
+corr_pol = circ_corrcl(pol_pRF, pol_atlas)
+corr_pol_rho = corr_pol[0]
+corr_pol_pval = corr_pol[1]
 
-<span class="n">corr_ecc_rho</span><span class="p">,</span> <span class="n">corr_ecc_pval</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">ecc_pRF</span><span class="p">,</span> <span class="n">ecc_atlas</span><span class="p">)</span>
+corr_ecc_rho, corr_ecc_pval = pearsonr(ecc_pRF, ecc_atlas)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Pearson&#39;s rho (p-value) : &quot;</span><span class="p">,</span> <span class="n">corr_ecc_rho</span><span class="p">,</span><span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="n">corr_ecc_pval</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Circular rho  (p-value) : &quot;</span><span class="p">,</span> <span class="n">corr_pol_rho</span><span class="p">,</span> <span class="s1">&#39;(&#39;</span><span class="p">,</span><span class="n">corr_pol_pval</span><span class="p">,</span><span class="s1">&#39;)&#39;</span><span class="p">)</span>
+print(&quot;\nPearson&#39;s rho (p-value) : &quot;, corr_ecc_rho,&#39;(&#39;,corr_ecc_pval,&#39;)&#39;)
+print(&quot;\nCircular rho  (p-value) : &quot;, corr_pol_rho, &#39;(&#39;,corr_pol_pval,&#39;)&#39;)
 
 
-<span class="c1"># Scatter plots</span>
-<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax_ecc</span><span class="p">,</span> <span class="n">ax_pol</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+# Scatter plots
+fig, (ax_ecc, ax_pol) = plt.subplots(1, 2, figsize=(8, 4), dpi=200)
 
-<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">scatter_size</span> <span class="o">=</span> <span class="mi">20</span>
+alpha = 0.5
+scatter_size = 20
 
-<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pRF vs atlas -derived retinotopic selectivity in V1&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+fig.suptitle(f&#39;pRF vs atlas -derived retinotopic selectivity in V1&#39;, fontsize=14, y=1)
 
-<span class="n">ecc_color</span> <span class="o">=</span> <span class="s2">&quot;#145A8C&quot;</span>
-<span class="n">pol_color</span> <span class="o">=</span> <span class="s2">&quot;#9A1D1D&quot;</span>
+ecc_color = &quot;#145A8C&quot;
+pol_color = &quot;#9A1D1D&quot;
 
-<span class="c1"># Eccentricity scatter plot</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ecc_pRF</span><span class="p">,</span> <span class="n">ecc_atlas</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">scatter_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">ecc_color</span><span class="p">)</span>
-<span class="n">max_ecc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">ecc_pRF</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">ecc_atlas</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_ecc</span><span class="p">)</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;pRF eccentricity (deg)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Atlas eccentricity (deg)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax_ecc</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Pearson&#39;s ρ=</span><span class="si">{</span><span class="n">corr_ecc_rho</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_ecc</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+# Eccentricity scatter plot
+ax_ecc.scatter(ecc_pRF, ecc_atlas, alpha=alpha, s=scatter_size, c=ecc_color)
+max_ecc = np.ceil(max(ecc_pRF.max(), ecc_atlas.max()))
+ax_ecc.plot([0, max_ecc], [0, max_ecc], &#39;k--&#39;, alpha=0.5)
+ax_ecc.set_xlim(0, max_ecc)
+ax_ecc.set_ylim(0, max_ecc)
+ax_ecc.set_xlabel(&#39;pRF eccentricity (deg)&#39;, fontsize=14)
+ax_ecc.set_ylabel(&#39;Atlas eccentricity (deg)&#39;, fontsize=14)
+ax_ecc.text(0.95, 0.05, f&quot;Pearson&#39;s ρ={corr_ecc_rho:.2f}&quot;,
+            ha=&#39;right&#39;, va=&#39;bottom&#39;, fontsize=14, transform=ax_ecc.transAxes)
 
-<span class="c1"># Polar angle scatter plot</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">pol_pRF</span><span class="p">,</span> <span class="n">pol_atlas</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">scatter_size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">pol_color</span><span class="p">)</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;pRF polar angle (rad)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Atlas polar angle (rad)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">ax_pol</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Circular ρ=</span><span class="si">{</span><span class="n">corr_pol_rho</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax_pol</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+# Polar angle scatter plot
+ax_pol.scatter(pol_pRF, pol_atlas, alpha=alpha, s=scatter_size, c=pol_color)
+ax_pol.plot([-np.pi, np.pi], [-np.pi, np.pi], &#39;k--&#39;, alpha=0.5)
+ax_pol.set_xlim(-np.pi, np.pi)
+ax_pol.set_ylim(-np.pi, np.pi)
+ax_pol.set_xlabel(&#39;pRF polar angle (rad)&#39;, fontsize=14)
+ax_pol.set_ylabel(&#39;Atlas polar angle (rad)&#39;, fontsize=14)
+ax_pol.text(0.95, 0.05, f&quot;Circular ρ={corr_pol_rho:.2f}&quot;,
+            ha=&#39;right&#39;, va=&#39;bottom&#39;, fontsize=14, transform=ax_pol.transAxes)
 
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+plt.tight_layout()
+plt.show()
 <br/></pre></div>
 </div>
 </div>
