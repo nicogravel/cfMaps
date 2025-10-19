@@ -41,7 +41,7 @@
 
 
 
-<p class="blurb">Research Log</p>
+<p class="blurb">Optimization Strategies in<br>Connective Field Mapping</p>
 
 
 
@@ -57,7 +57,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../refs.html">3. References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../modules.html">4. Codebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">4. Package</a></li>
 </ul>
 
 <div class="relations">
@@ -114,34 +114,6 @@
             
   <section id="Benchmarks-for-different-modelling-procedures">
 <h1><span class="section-number">2.2. </span>Benchmarks for different modelling procedures<a class="headerlink" href="#Benchmarks-for-different-modelling-procedures" title="Permalink to this heading">¶</a></h1>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Reinstall latest updates and restart kernel
-!cd /home/nicolas-gravel/Documents/GitHubProjects/cfMaps/ &amp;&amp; pip install -e .
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Obtaining file:///home/nicolas-gravel/Documents/GitHubProjects/cfMaps
-  Installing build dependencies ... done
-  Checking if build backend supports build_editable ... done
-  Getting requirements to build editable ... done
-  Preparing editable metadata (pyproject.toml) ... done
-Building wheels for collected packages: conmaps
-  Building editable for conmaps (pyproject.toml) ... done
-  Created wheel for conmaps: filename=conmaps-0.0.0-0.editable-py3-none-any.whl size=3772 sha256=c7b1c5e03fe9648e33ffea1dddd0013549147a34a88a86b331a314093f0a9992
-  Stored in directory: /tmp/pip-ephem-wheel-cache-kd3m7043/wheels/a0/70/a8/75fa0900702ea99de0075946e4ff3d3c683c37649355fe66c2
-Successfully built conmaps
-Installing collected packages: conmaps
-Successfully installed conmaps-0.0.0
-</pre></div></div>
-</div>
 <section id="Set-up-variables">
 <h2><span class="section-number">2.2.1. </span>Set up variables<a class="headerlink" href="#Set-up-variables" title="Permalink to this heading">¶</a></h2>
 <div class="nbinput nblast docutils container">
@@ -329,14 +301,14 @@ Sigma range: 0.00 - 16.81
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_9_2.png" src="../_images/notebooks_CF_modelling_9_2.png" />
+<img alt="../_images/notebooks_CF_modelling_8_2.png" src="../_images/notebooks_CF_modelling_8_2.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_9_3.png" src="../_images/notebooks_CF_modelling_9_3.png" />
+<img alt="../_images/notebooks_CF_modelling_8_3.png" src="../_images/notebooks_CF_modelling_8_3.png" />
 </div>
 </div>
 </section>
@@ -421,7 +393,7 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_11_0.png" src="../_images/notebooks_CF_modelling_11_0.png" />
+<img alt="../_images/notebooks_CF_modelling_10_0.png" src="../_images/notebooks_CF_modelling_10_0.png" />
 </div>
 </div>
 </section>
@@ -560,14 +532,14 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_15_1.png" src="../_images/notebooks_CF_modelling_15_1.png" />
+<img alt="../_images/notebooks_CF_modelling_14_1.png" src="../_images/notebooks_CF_modelling_14_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_15_2.png" src="../_images/notebooks_CF_modelling_15_2.png" />
+<img alt="../_images/notebooks_CF_modelling_14_2.png" src="../_images/notebooks_CF_modelling_14_2.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
@@ -585,7 +557,7 @@ Circular rho  (p-value) :  0.8231211731234961 ( 1.0776404524163543e-127 )
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_15_4.png" src="../_images/notebooks_CF_modelling_15_4.png" />
+<img alt="../_images/notebooks_CF_modelling_14_4.png" src="../_images/notebooks_CF_modelling_14_4.png" />
 </div>
 </div>
 </section>
@@ -625,7 +597,7 @@ Distance matrix shape: (863, 863)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_17_1.png" src="../_images/notebooks_CF_modelling_17_1.png" />
+<img alt="../_images/notebooks_CF_modelling_16_1.png" src="../_images/notebooks_CF_modelling_16_1.png" />
 </div>
 </div>
 </section>
@@ -1401,7 +1373,7 @@ Total R² improvements:
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_29_41.png" src="../_images/notebooks_CF_modelling_29_41.png" />
+<img alt="../_images/notebooks_CF_modelling_28_41.png" src="../_images/notebooks_CF_modelling_28_41.png" />
 </div>
 </div>
 </section>
@@ -1494,28 +1466,28 @@ plt.show()
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_31_0.png" src="../_images/notebooks_CF_modelling_31_0.png" />
+<img alt="../_images/notebooks_CF_modelling_30_0.png" src="../_images/notebooks_CF_modelling_30_0.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_31_1.png" src="../_images/notebooks_CF_modelling_31_1.png" />
+<img alt="../_images/notebooks_CF_modelling_30_1.png" src="../_images/notebooks_CF_modelling_30_1.png" />
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_31_2.png" src="../_images/notebooks_CF_modelling_31_2.png" />
+<img alt="../_images/notebooks_CF_modelling_30_2.png" src="../_images/notebooks_CF_modelling_30_2.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_31_3.png" src="../_images/notebooks_CF_modelling_31_3.png" />
+<img alt="../_images/notebooks_CF_modelling_30_3.png" src="../_images/notebooks_CF_modelling_30_3.png" />
 </div>
 </div>
 </section>
@@ -1625,7 +1597,7 @@ Sites with improved R²: 1272 (52.8%)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_33_2.png" src="../_images/notebooks_CF_modelling_33_2.png" />
+<img alt="../_images/notebooks_CF_modelling_32_2.png" src="../_images/notebooks_CF_modelling_32_2.png" />
 </div>
 </div>
 </section>
@@ -1719,7 +1691,7 @@ Polar angle - Circular ρ: 0.515 (p=1.23e-143)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/notebooks_CF_modelling_35_1.png" src="../_images/notebooks_CF_modelling_35_1.png" />
+<img alt="../_images/notebooks_CF_modelling_34_1.png" src="../_images/notebooks_CF_modelling_34_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">

@@ -1,22 +1,21 @@
-Optimization strategies in cortical connective field (CF) mapping
+Optimization Strategies in Connective Field Mapping
 ##################################################################
 
-*Benchmarks for different modelling procedures in cortical connective field (CF) mapping.*
+Benchmarks for different modelling procedures in cortical connective field (CF) mapping.
+========================================================================================
 
-.. note::
 
-	This online resource is an evolving document. It may therefore contain errors and corrections. Content will be added over time. Check it regularly to get the latest version.
 
-Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in ``mrVista`` (using Matlab's ``lscov``) :footcite:p:`Haak_2013,Gravel_2014`, which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation part of the *connective field* branch of the `prfpy <https://github.com/VU-Cog-Sci/prfpy>`_ Python package :footcite:p:`Knapen_topo_2021`. Using Python scikit-learn optimization functions (implemented as part of the ``prfpy`` package), the parameter space this version provides also converges to predefined grid parameters. Third, a more recent Python implementation by So-Hyeon et al. (2024) :footcite:p:`Yoo_proto_2024` that implements a parameter (CF size) refinement approach using the `Broyden-Fletcher-Goldfarb-Shanno <https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm>`_ optimization algorithm. Fourth, another Python implementation that capitalizes on `automatic differentiation <https://en.wikipedia.org/wiki/Automatic_differentiation>`_ using ``TensorFlow`` and CUDA (partly inspired in the recent Python package `braincoder <https://braincoder-devs.github.io/>`_) :footcite:p:`deHollander2024braincoder` to achieve highly efficient gradient descent. To coordinate this effort, we rely on widely used population receptive field mapping tools :footcite:p:`Dumoulin_2008,Benson_2018` and high-field 7T-MRI data kindly made available by `NeuroSpin <https://joliot.cea.fr/drf/joliot/en/Pages/research_entities/NeuroSpin.aspx>`_.
+Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in ``mrVista`` (using Matlab's ``lscov``) :footcite:p:`Haak_2013,Gravel_2014`, which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation part of the *connective field* branch of the `prfpy <https://github.com/VU-Cog-Sci/prfpy>`_ Python package :footcite:p:`Knapen_topo_2021`. Using Python scikit-learn optimization functions (implemented as part of the ``prfpy`` package), the parameter space this package provides also converges to predefined grid parameters, although at a much faster rate (thanks to the CPU parallelization tool `joblib``). Third, a more recent Python implementation by So-Hyeon et al. (2024) :footcite:p:`Yoo_proto_2024` that implements a parameter (CF size) refinement approach using the `Broyden-Fletcher-Goldfarb-Shanno <https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm>`_ optimization algorithm. Fourth, another Python implementation that capitalizes on `automatic differentiation <https://en.wikipedia.org/wiki/Automatic_differentiation>`_ using ``TensorFlow`` and CUDA (partly inspired in the recent Python package `braincoder <https://braincoder-devs.github.io/>`_) :footcite:p:`deHollander2024braincoder` to achieve highly efficient gradient descent. To coordinate this effort, we rely on widely used population receptive field mapping tools :footcite:p:`Dumoulin_2008,Benson_2018` and high-field 7T-MRI data kindly made available by `NeuroSpin <https://joliot.cea.fr/drf/joliot/en/Pages/research_entities/NeuroSpin.aspx>`_.
 
-Please have a look `here <https://nicogravel.github.io/cfMaps/>`_ for installation instructions, tutorials, and examples.
+
 
 How to cite
 ***********
 
 If you use this code please cite using the following information:
 
-Gravel, N., Renken, R., & Cornelissen, F. W. (2025). *Optimization strategies in cortical connective field (CF) mapping*. Zenodo. DOI: https://doi.org/10.5281/zenodo.17373320
+Gravel, N., Renken, R., & Cornelissen, F. W. (2025). *Optimization strategies in cortical connective field  mapping*. Zenodo. DOI: https://doi.org/10.5281/zenodo.17373320
 
 Alternatively, use this BibTeX entry:
 
@@ -24,7 +23,7 @@ Alternatively, use this BibTeX entry:
 
    @misc{Gravel_optCF_2025,
      author       = {Gravel, Nicol{\'a}s and Renken, Remco and Cornelissen, Frans W},
-     title        = {Optimization strategies in cortical connective field (CF) mapping},
+     title        = {Optimization strategies in cortical connective field mapping},
      year         = {2025},
      publisher    = {Zenodo},
      doi          = {10.5281/zenodo.17373320},
@@ -44,8 +43,11 @@ Content
       Visual Field mapping <vfm/index>
       Connectivity mapping <connmaps/index>
       References <refs>
-      Codebook <modules>  
+      Package <modules>  
 
+.. note::
+
+	This online resource is an evolving document. It may therefore contain errors and corrections. Content will be added over time. Check it regularly to get the latest version.
 
 **********
 References
@@ -53,4 +55,4 @@ References
 
 .. footbibliography::
 
-.. [#handbook] The tutorials presented here are inspired by `The Good Research Code Handbook <https://goodresearch.dev>`_, by `Patrick Mineault <https://scholar.google.com/citations?user=gpQg9uQAAAAJ&hl=en>`_. 
+

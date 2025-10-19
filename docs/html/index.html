@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Optimization strategies in cortical connective field (CF) mapping &#8212; cfMaps  documentation</title>
+    <title>Optimization Strategies in Connective Field Mapping &#8212; cfMaps  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css" />
@@ -37,7 +37,7 @@
 
 
 
-<p class="blurb">Research Log</p>
+<p class="blurb">Optimization Strategies in<br>Connective Field Mapping</p>
 
 
 
@@ -49,7 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="vfm/index.html">1. Visual Field mapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="connmaps/index.html">2. Connectivity mapping</a></li>
 <li class="toctree-l1"><a class="reference internal" href="refs.html">3. References</a></li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">4. Codebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">4. Package</a></li>
 </ul>
 
 <div class="relations">
@@ -97,23 +97,19 @@
 
           <div class="body" role="main">
             
-  <section id="optimization-strategies-in-cortical-connective-field-cf-mapping">
-<h1>Optimization strategies in cortical connective field (CF) mapping<a class="headerlink" href="#optimization-strategies-in-cortical-connective-field-cf-mapping" title="Permalink to this heading">¶</a></h1>
-<p><em>Benchmarks for different modelling procedures in cortical connective field (CF) mapping.</em></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This online resource is an evolving document. It may therefore contain errors and corrections. Content will be added over time. Check it regularly to get the latest version.</p>
-</div>
-<p>Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in <code class="docutils literal notranslate"><span class="pre">mrVista</span></code> (using Matlab’s <code class="docutils literal notranslate"><span class="pre">lscov</span></code>) <a class="footnote-reference brackets" href="#footcite-haak-2013" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-gravel-2014" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation part of the <em>connective field</em> branch of the <a class="reference external" href="https://github.com/VU-Cog-Sci/prfpy">prfpy</a> Python package <a class="footnote-reference brackets" href="#footcite-knapen-topo-2021" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Using Python scikit-learn optimization functions (implemented as part of the <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> package), the parameter space this version provides also converges to predefined grid parameters. Third, a more recent Python implementation by So-Hyeon et al. (2024) <a class="footnote-reference brackets" href="#footcite-yoo-proto-2024" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> that implements a parameter (CF size) refinement approach using the <a class="reference external" href="https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm">Broyden-Fletcher-Goldfarb-Shanno</a> optimization algorithm. Fourth, another Python implementation that capitalizes on <a class="reference external" href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a> using <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code> and CUDA (partly inspired in the recent Python package <a class="reference external" href="https://braincoder-devs.github.io/">braincoder</a>) <a class="footnote-reference brackets" href="#footcite-dehollander2024braincoder" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> to achieve highly efficient gradient descent. To coordinate this effort, we rely on widely used population receptive field mapping tools <a class="footnote-reference brackets" href="#footcite-dumoulin-2008" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-benson-2018" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> and high-field 7T-MRI data kindly made available by <a class="reference external" href="https://joliot.cea.fr/drf/joliot/en/Pages/research_entities/NeuroSpin.aspx">NeuroSpin</a>.</p>
-<p>Please have a look <a class="reference external" href="https://nicogravel.github.io/cfMaps/">here</a> for installation instructions, tutorials, and examples.</p>
+  <section id="optimization-strategies-in-connective-field-mapping">
+<h1>Optimization Strategies in Connective Field Mapping<a class="headerlink" href="#optimization-strategies-in-connective-field-mapping" title="Permalink to this heading">¶</a></h1>
+<section id="benchmarks-for-different-modelling-procedures-in-cortical-connective-field-cf-mapping">
+<h2>Benchmarks for different modelling procedures in cortical connective field (CF) mapping.<a class="headerlink" href="#benchmarks-for-different-modelling-procedures-in-cortical-connective-field-cf-mapping" title="Permalink to this heading">¶</a></h2>
+<p>Here we compare three flavors of population cortico-cortical connective field (CF) modeling. First, the former implementation in <code class="docutils literal notranslate"><span class="pre">mrVista</span></code> (using Matlab’s <code class="docutils literal notranslate"><span class="pre">lscov</span></code>) <a class="footnote-reference brackets" href="#footcite-haak-2013" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-gravel-2014" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>, which implemented a grid search approach. Without further optimization, the parameter space revealed by this implementation match predefined grid value predictions. Second, the implementation part of the <em>connective field</em> branch of the <a class="reference external" href="https://github.com/VU-Cog-Sci/prfpy">prfpy</a> Python package <a class="footnote-reference brackets" href="#footcite-knapen-topo-2021" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>. Using Python scikit-learn optimization functions (implemented as part of the <code class="docutils literal notranslate"><span class="pre">prfpy</span></code> package), the parameter space this package provides also converges to predefined grid parameters, although at a much faster rate (thanks to the CPU parallelization tool <cite>joblib`</cite>). Third, a more recent Python implementation by So-Hyeon et al. (2024) <a class="footnote-reference brackets" href="#footcite-yoo-proto-2024" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a> that implements a parameter (CF size) refinement approach using the <a class="reference external" href="https://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm">Broyden-Fletcher-Goldfarb-Shanno</a> optimization algorithm. Fourth, another Python implementation that capitalizes on <a class="reference external" href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a> using <code class="docutils literal notranslate"><span class="pre">TensorFlow</span></code> and CUDA (partly inspired in the recent Python package <a class="reference external" href="https://braincoder-devs.github.io/">braincoder</a>) <a class="footnote-reference brackets" href="#footcite-dehollander2024braincoder" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a> to achieve highly efficient gradient descent. To coordinate this effort, we rely on widely used population receptive field mapping tools <a class="footnote-reference brackets" href="#footcite-dumoulin-2008" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a><a class="footnote-reference brackets" href="#footcite-benson-2018" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></a> and high-field 7T-MRI data kindly made available by <a class="reference external" href="https://joliot.cea.fr/drf/joliot/en/Pages/research_entities/NeuroSpin.aspx">NeuroSpin</a>.</p>
 <section id="how-to-cite">
-<h2>How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this heading">¶</a></h2>
+<h3>How to cite<a class="headerlink" href="#how-to-cite" title="Permalink to this heading">¶</a></h3>
 <p>If you use this code please cite using the following information:</p>
-<p>Gravel, N., Renken, R., &amp; Cornelissen, F. W. (2025). <em>Optimization strategies in cortical connective field (CF) mapping</em>. Zenodo. DOI: <a class="reference external" href="https://doi.org/10.5281/zenodo.17373320">https://doi.org/10.5281/zenodo.17373320</a></p>
+<p>Gravel, N., Renken, R., &amp; Cornelissen, F. W. (2025). <em>Optimization strategies in cortical connective field  mapping</em>. Zenodo. DOI: <a class="reference external" href="https://doi.org/10.5281/zenodo.17373320">https://doi.org/10.5281/zenodo.17373320</a></p>
 <p>Alternatively, use this BibTeX entry:</p>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">Gravel_optCF_2025</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w">       </span><span class="p">=</span><span class="w"> </span><span class="s">{Gravel, Nicol{\&#39;a}s and Renken, Remco and Cornelissen, Frans W}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{Optimization strategies in cortical connective field (CF) mapping}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w">        </span><span class="p">=</span><span class="w"> </span><span class="s">{Optimization strategies in cortical connective field mapping}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w">         </span><span class="p">=</span><span class="w"> </span><span class="s">{2025}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">publisher</span><span class="w">    </span><span class="p">=</span><span class="w"> </span><span class="s">{Zenodo}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">doi</span><span class="w">          </span><span class="p">=</span><span class="w"> </span><span class="s">{10.5281/zenodo.17373320}</span><span class="p">,</span>
@@ -122,7 +118,7 @@
 </pre></div>
 </div>
 <section id="content">
-<h3>Content<a class="headerlink" href="#content" title="Permalink to this heading">¶</a></h3>
+<h4>Content<a class="headerlink" href="#content" title="Permalink to this heading">¶</a></h4>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="vfm/index.html">1. Visual Field mapping</a><ul>
@@ -139,15 +135,19 @@
 <li class="toctree-l2"><a class="reference internal" href="refs.html#suggestions">3.1. Suggestions 📖</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="modules.html">4. Codebook</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">4. Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="cfmap.html">4.1. cfmap package</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This online resource is an evolving document. It may therefore contain errors and corrections. Content will be added over time. Check it regularly to get the latest version.</p>
+</div>
 </section>
 <section id="references">
-<h3>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h3>
+<h4>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h4>
 <div class="docutils container" id="id8">
 <aside class="footnote brackets" id="footcite-haak-2013" role="note">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
@@ -179,12 +179,7 @@
 </aside>
 </aside>
 </div>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="handbook" role="note">
-<span class="label"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></span>
-<p>The tutorials presented here are inspired by <a class="reference external" href="https://goodresearch.dev">The Good Research Code Handbook</a>, by <a class="reference external" href="https://scholar.google.com/citations?user=gpQg9uQAAAAJ&amp;hl=en">Patrick Mineault</a>.</p>
-</aside>
-</aside>
+</section>
 </section>
 </section>
 </section>
