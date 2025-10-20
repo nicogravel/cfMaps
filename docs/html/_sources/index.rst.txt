@@ -15,14 +15,14 @@ How to cite
 
 If you use this code please cite using the following information:
 
-Gravel, N., Renken, R., & Cornelissen, F. W. (2025). *Optimization strategies in cortical connective field  mapping*. Zenodo. DOI: https://doi.org/10.5281/zenodo.17373320
+Gravel, N., Zhan M., Renken, R., & Cornelissen, F. W. (2025). *Optimization strategies in cortical connective field  mapping*. Zenodo. DOI: https://doi.org/10.5281/zenodo.17373320
 
 Alternatively, use this BibTeX entry:
 
 .. code-block:: bibtex
 
    @misc{Gravel_optCF_2025,
-     author       = {Gravel, Nicol{\'a}s and Renken, Remco and Cornelissen, Frans W},
+     author       = {Gravel, Nicol{\'a}s and Zhan, Minye and Renken, Remco and Cornelissen, Frans W},
      title        = {Optimization strategies in cortical connective field mapping},
      year         = {2025},
      publisher    = {Zenodo},

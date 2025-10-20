@@ -14,7 +14,7 @@ Please have a look [here](https://nicogravel.github.io/cfMaps/) for installation
 
 If you use this code please cite using the following information:
 
-Gravel, N., Renken, R., & Cornelissen, F. W. (2025). Optimization strategies in cortical connective field (CF) mapping. Zenodo. https://doi.org/10.5281/zenodo.17373320
+Gravel, N., Zhan M., Renken, R., & Cornelissen, F. W. (2025). Optimization strategies in cortical connective field mapping. Zenodo. https://doi.org/10.5281/zenodo.17373320
 
 Alternatively, use this BibTeX entry:
 
