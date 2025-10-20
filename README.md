@@ -20,7 +20,7 @@ Alternatively, use this BibTeX entry:
 
 ```bibtex
 @misc{Gravel_optCF_2025,
-  author       = {Gravel, Nicol{\'a}s and Renken, Remco and Cornelissen, Frans W},
+  author       = {Gravel, Nicol{\'a}s and Zhan, Minye and Renken, Remco and Cornelissen, Frans W},
   title        = {Optimization strategies in cortical connective field mapping},
   year         = {2025},
   publisher    = {Zenodo},
